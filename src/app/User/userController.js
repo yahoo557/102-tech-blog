@@ -4,8 +4,7 @@ const userService = require("../../app/User/userService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const {response, errResponse} = require("../../../config/response");
 
-const regexEmail = require("regex-email");
-const {emit} = require("nodemon");
+
 
 /**
  * API No. 0
