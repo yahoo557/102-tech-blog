@@ -1,10 +1,11 @@
 const express = require('express');
 const compression = require('compression');
 const methodOverride = require('method-override');
+const dotenv = require('dotenv')
 var cors = require('cors');
 module.exports = function () {
     const app = express();
-
+    
     app.use(compression());
 
     app.use(express.json());
