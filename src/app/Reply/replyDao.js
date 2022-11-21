@@ -27,3 +27,11 @@ const deleteReply = async(connection, replyId)=>{
     const deleteReplyQuery = `UPDATE `
 
 }
+
+module.exports = {
+    selectReplyUser,
+    selectReplyPost,
+    insertReply,
+    updateReply,
+    deleteReply
+};
