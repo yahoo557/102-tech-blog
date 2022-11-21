@@ -26,5 +26,3 @@ module.exports = function(app){
 // JWT 검증 API
 app.get('/app/auto-login', jwtMiddleware, user.check);
 
-
-
