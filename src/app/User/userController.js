@@ -38,10 +38,7 @@ exports.postUsers = async function (req, res) {
     // 형식 체크 (by 정규표현식)
     if (!regexEmail.test(email))
         return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
-
-    // 기타 등등 - 추가하기
-
-
+        
     const signUpResponse = await userService.createUser(
         email,
         password,

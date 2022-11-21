@@ -3,7 +3,6 @@ const boardService = require("../../app/board/boardService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const {response, errResponse} = require("../../../config/response");
 
-
 /**
  * API No. 1
  * API Name : 게시글 작성
@@ -20,7 +19,6 @@ exports.writePost = async (req,res) => {
     return res.send(writeResponse)
 }
 
-
 /**
  * API No. 2
  * API Name : 게시글 리스트 가져오기(제목으로 검색조회)
@@ -34,13 +32,10 @@ exports.getPostList = async (req, res) =>{
         const postListResponse = await boardProvider.getPostList();
         return res.send(postListResponse)
     }
-    
     // 게시글 제목으로 검색
     const postListResponse = await boardProvider.getPostList(title);
     return res.send(postListResponse)
-    
-}
-
+};
 
 /**
  * API No. 3
@@ -55,7 +50,7 @@ exports.getPost = async (req, res) =>{
 /**
  * API No. 4
  * API Name : 게시글 수정
- * [FETCH] /app/board/:id
+ * [FETCH] /app/board/{id}
  */
 exports.editPost = async (req, res) =>{
     const {title, body} = req.body
@@ -75,8 +70,6 @@ exports.deletePost = async (req, res)=>{
     return res.send(deleteResponse)
 };
 
-
-
 /**
  * API No.6
  * API Name : JWT decode
@@ -87,4 +80,3 @@ exports.deletePost = async (req, res)=>{
     console.log(userIdResult);
     return res.send(response(baseResponse.TOKEN_VERIFICATION_SUCCESS));
 };
-

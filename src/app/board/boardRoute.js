@@ -17,6 +17,10 @@ module.exports = (app) =>{
     // 5. 게시글 삭제
     app.delete('/app/board/:id', board.deletePost);
     
-    
-}
+    // 6. 핫 게시글 상위 10개
+    app.get('/app/board/hot', board.getHotPost);
+
+    // 7. 게시글 좋아요/취소
+    app.post('/app/board/like/:id', board.likePost);
+};
 
