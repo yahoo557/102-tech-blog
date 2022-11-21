@@ -33,7 +33,7 @@ module.exports = {
 
     BOARD_TITLE_EMPTY : {"isSuccess": false, "code": 2001, "message":"제목을 입력해주세요"},
     BOARD_TITLE_LENGTH : {"isSuccess": false, "code": 2001, "message":"제목을 입력해주세요"},
-
+    BOARD_BODY_EMPTY : {"isSuccess": false, "code": 2001, "message":"본문을 입력해주세요"},
 
 
 
@@ -46,6 +46,7 @@ module.exports = {
     SIGNIN_INACTIVE_ACCOUNT : { "isSuccess": false, "code": 3005, "message": "비활성화 된 계정입니다. 고객센터에 문의해주세요." },
     SIGNIN_WITHDRAWAL_ACCOUNT : { "isSuccess": false, "code": 3006, "message": "탈퇴 된 계정입니다. 고객센터에 문의해주세요." },
 
+    
 
 
 

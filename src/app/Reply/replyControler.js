@@ -1,45 +1,51 @@
-const boardProvider = require("../../app/board/boardProvider");
-const boardService = require("../../app/board/boardService");
+const replyProvider = require("../../app/reply/replyProvider");
+const replyService = require("../../app/reply/replyService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const {response, errResponse} = require("../../../config/response");
 
 
 /**
  * API No. 1
- * API Name : 게시글 작성
- * [POST] /app/board
+ * API Name : 댓글 작성
+ * [POST] /app/reply
  * header : jwt
  * body : {title : , body}
  */
 exports.writePost = async (req,res) => {
-    const {title, body} = req.body;
-    //빈값 체크
-    if(!title || !body) return res.send(response(baseResponse.BOARD_BODY_EMPTY));
-
-    const writeResponse = await postService.createPost(title,body);
+    const {reply_id, body} = req.body;
+    //빈값 검증
+    if(!body) return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY))
+    
+    //대댓글로 작성
+    if(!reply_id){
+        const writeResponse = await postService.createPost(reply_id,body);
+        return res.send(writeResponse)
+    }
+    //댓글로 작성
+    const writeResponse =  await postService.createPost(body);
     return res.send(writeResponse)
 }
 
 
 /**
  * API No. 2
- * API Name : 게시글 리스트 가져오기(제목으로 검색조회)
+ * API Name :  댓글 가져오기
  * [GET] /app/board
- * 
- */ 
+ */
 exports.getPostList = async (req, res) =>{
     const {title} = req.query
-    // 게시글 전체 조회
     if(!title){
+        // 게시글 전체 조회
         const postListResponse = await boardProvider.getPostList();
         return res.send(postListResponse)
     }
-    
-    // 게시글 제목으로 검색
-    const postListResponse = await boardProvider.getPostList(title);
-    return res.send(postListResponse)
-    
+    else {
+        // 게시글 작성자로 조회
+        const postListResponse = await boardProvider.getPostList(title);
+        return res.send(postListResponse)
+    }
 }
+
 
 
 /**
@@ -48,8 +54,12 @@ exports.getPostList = async (req, res) =>{
  * [GET] /app/board/{id}
  */
 exports.getPost = async (req, res) =>{
-    return res.send(await boardProvider.getPost(req.params.id));
-};
+    const postId = req.params.id;
+    const postResponse = await boardProvider.getPost(
+        postId
+    );
+    return res.send(postResponse)
+}
 
 
 /**
@@ -59,7 +69,7 @@ exports.getPost = async (req, res) =>{
  */
 exports.editPost = async (req, res) =>{
     const {title, body} = req.body
-    const editResponse = await boardService.editPost(req.params.id, title, body);
+    const editResponse = await boardService.editPost(title, body);
     return res.send(editResponse)
 }
 
