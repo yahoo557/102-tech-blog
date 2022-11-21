@@ -32,5 +32,5 @@ module.exports = function(app){
 app.get('/app/auto-login', jwtMiddleware, user.check);
 
 // TODO: 탈퇴하기 API
-
 app.get('/app/users/user-delete', jwtMiddleware, user.check);
+
