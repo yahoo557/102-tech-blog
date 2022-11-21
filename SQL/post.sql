@@ -11,7 +11,7 @@
 -- This script only contains the table creation statements and does not fully represent the table in the database. It's still missing: indices, triggers. Do not use it as a backup.
 
 -- Sequence and defined type
-CREATE SEQUENCE IF NOT EXISTS seq_post_id;
+CREATE SEQUENCE IF NOT EXISTS seq_post_id START 1;
 
 -- Table Definition
 CREATE TABLE "public"."post" (
