@@ -18,13 +18,13 @@ CREATE TABLE "public"."post" (
     "id" int4 NOT NULL DEFAULT nextval('seq_post_id'::regclass),
     "title" varchar(255),
     "body" text,
-    "writer" int4,
+    "user_id" int4,
     "updatedate" timestamp,
     "createdate" timestamp DEFAULT now(),
     PRIMARY KEY ("id")
 );
 
-INSERT INTO "public"."post" ("id", "title", "body", "writer", "updatedate", "createdate") VALUES
+INSERT INTO "public"."post" ("id", "title", "body", "user_id", "updatedate", "createdate") VALUES
 (1, '테스트 게시글 1', '테스트 본문 1', 1, NULL, '2022-11-06 13:58:01.98207'),
 (2, '테스트 타이틀 2', '테스트 본문 2', 2, NULL, '2022-11-06 13:58:18.269339'),
 (4, '테스트 타이틀3 ', '테스트 바디 3', 40, NULL, '2022-11-06 15:07:06.299296'),
