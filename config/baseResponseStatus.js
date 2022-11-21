@@ -35,6 +35,7 @@ module.exports = {
     BOARD_TITLE_LENGTH : {"isSuccess": false, "code": 2001, "message":"제목을 입력해주세요"},
     BOARD_BODY_EMPTY : {"isSuccess": false, "code": 2001, "message":"본문을 입력해주세요"},
 
+    REPLY_POST_ID_EMPTY: {"isSuccess": false, "code": 2001, "message":"postId를 입력해주세요"},
 
 
     // Response error

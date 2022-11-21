@@ -9,7 +9,7 @@ module.exports = (app) =>{
     app.get('/app/board', board.getPostList);
     
     // 3. 특정 게시글 가져오기
-    app.get('/app/baord/:id', board.getPost);
+    app.get('/app/board/:id', board.getPost);
     
     // 4. 게시글 수정
     app.fetch('/app/board/:id', board.editPost);
@@ -17,7 +17,6 @@ module.exports = (app) =>{
     // 5. 게시글 삭제
     app.delete('/app/board/:id', board.deletePost);
     
-    // 6. 해외 축구 리그 정보 가져오기 (외부 API 적용하기)
-    app.get('/app/board/league-info')
+    
 }
 

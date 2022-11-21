@@ -12,75 +12,56 @@ const {response, errResponse} = require("../../../config/response");
  * body : {title : , body}
  */
 exports.writePost = async (req,res) => {
-    const {reply_id, body} = req.body;
+    const {post_id, reply_id, body} = req.body;
     //빈값 검증
-    if(!body) return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY))
+    if(!body||!post_id) return res.send(response(baseResponse.REPLY_POST_ID_EMPTY))
     
     //대댓글로 작성
     if(!reply_id){
-        const writeResponse = await postService.createPost(reply_id,body);
+        const writeResponse = await replyService.createReply(post_id,reply_id,body);
         return res.send(writeResponse)
     }
+
     //댓글로 작성
-    const writeResponse =  await postService.createPost(body);
+    const writeResponse =  await replyService.createReply(post_id, body);
     return res.send(writeResponse)
 }
 
 
 /**
  * API No. 2
- * API Name :  댓글 가져오기
- * [GET] /app/board
+ * API Name : 특정 게시글에 작성된 모든 댓글 가져오기(default), 특정 유저가 작성한 모든 댓글 가져오기
+ * [GET] /app/reply/
  */
-exports.getPostList = async (req, res) =>{
-    const {title} = req.query
-    if(!title){
-        // 게시글 전체 조회
-        const postListResponse = await boardProvider.getPostList();
-        return res.send(postListResponse)
-    }
-    else {
-        // 게시글 작성자로 조회
-        const postListResponse = await boardProvider.getPostList(title);
-        return res.send(postListResponse)
-    }
+exports.getReplyList = async (req, res) =>{
+    const {userId, postId} = req.query
+
+    if(!userId && !postId) return res.send(baseResponse.REPLY_POST_ID_EMPTY);
+
+    if(postId) return res.send(await replyProvider.getReplyListPost(postId));
+
+    return res.send(await replyProvider.getReplyListUser(userId));
 }
-
-
-
-/**
- * API No. 3
- * API Name : 특정 게시글 가져오기
- * [GET] /app/board/{id}
- */
-exports.getPost = async (req, res) =>{
-    const postId = req.params.id;
-    const postResponse = await boardProvider.getPost(
-        postId
-    );
-    return res.send(postResponse)
-}
-
 
 /**
  * API No. 4
- * API Name : 게시글 수정
- * [FETCH] /app/board/:id
+ * API Name : 댓글 수정
+ * [FETCH] /app/reply/:id
  */
 exports.editPost = async (req, res) =>{
-    const {title, body} = req.body
-    const editResponse = await boardService.editPost(title, body);
+    const {body} = req.body
+    const editResponse = await replyService.editReply(body);
     return res.send(editResponse)
 }
 
 
 /**
  * API No.5
- * API Name : 게시글 삭제
- * [DELETE] /app/board/{id}
+ * API Name : 댓글 삭제
+ * [DELETE] /app/reply/:id
  */
 exports.deletePost = async (req, res)=>{
-    const postId = req.params.id
+    const replyId = req.params.id
     const deleteResponse = await boardService.deletePost(postId);
     return res.send(deleteResponse)
 };
