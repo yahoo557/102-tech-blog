@@ -7,5 +7,5 @@ module.exports = (app) =>{
     // 2. 랜덤 남친짤 가져오기
     app.get('/app/random', random.getRandomBoyfriendImage);
 
-
+    
 }

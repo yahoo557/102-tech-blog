@@ -9,7 +9,7 @@ const {response, errResponse} = require("../../../config/response");
  * [POST] /app/random
  */
 exports.createAuthToken = (req, res) => {
-    const {nickname, instagram} = req.body;
+    const {nickname} = req.body;
     return res.send(randomService.createAuthToken(nickname, instagram));
 };
 

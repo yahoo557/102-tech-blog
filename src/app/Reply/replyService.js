@@ -7,11 +7,10 @@ const replyProvider = require("./replyProvider");
 const replyDao = require("./replyDao");
 
 exports.createReply  = async (post_id, reply_id , body)=>{
-    // 도배 확인
     try{
-
+        const connection = await pool.getConnection(async (conn) => conn);
     }catch(e){
-        
+
     }
     
 }
@@ -19,4 +18,8 @@ exports.createReply  = async (post_id, reply_id , body)=>{
 
 exports.editReply  = async ()=>{
 
-}
+};
+
+exports.deleteReply = async (replyId)=>{
+
+};
