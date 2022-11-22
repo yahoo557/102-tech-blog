@@ -5,3 +5,9 @@ const {pool} = require("../../../config/database");
 exports.createPost = async (title, body, user) =>{
 
 }
+
+exports.deletePost = async(postId) =>{
+    
+
+}
+

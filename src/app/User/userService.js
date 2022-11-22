@@ -111,3 +111,7 @@ exports.editUser = async function (id, nickname) {
         return errResponse(baseResponse.DB_ERROR);
     }
 }
+
+exports.deleteUser = async (id) => {
+
+};
