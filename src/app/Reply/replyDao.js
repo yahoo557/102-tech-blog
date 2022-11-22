@@ -11,21 +11,22 @@ const selectReplyPost  = async (connection, poatId) =>{
 }
 
 // 댓글 생성
-const insertReply = async (connection, body, userId) =>{
-    const insertReplyQuery = `INSERT body, user_id FROM reply VALUSE($1, $2);`;
+const insertReply = async (connection, body, userId, reply_id) =>{
+    const insertReplyQuery = `INSERT body, user_id, id FROM reply VALUSE($1, $2, $3) returning *;`;
     return await connection.query(insertReplyQuery, [body, userId]);;
 }
 
 // 댓글 수정
 const updateReply = async (connection, body, reply_id) =>{
-    const updateReply = `UPDATE body FROM reply WHERE id =  `
+    const updateReply = `UPDATE reply SET body = %1 WHERE id = $2 returning *;`
+    return await connection.query(updateReply, [body, reply_id]);
 }
 
 
 // 댓글 삭제
 const deleteReply = async(connection, replyId)=>{
-    const deleteReplyQuery = `UPDATE `
-
+    const deleteReplyQuery = `UPDATE reply SET status = 'OFFLINE' WHERE id = $1`
+    return await connection.query(deleteReplyQuery, [replyId]);
 }
 
 module.exports = {
