@@ -1,5 +1,5 @@
 // const mysql = require('mysql2/promise');
-const { Client, Pool } = require('ps')
+const { Client, Pool } = require('pg')
 // const {logger} = require('./winston');
 
 // TODO: 본인의 DB 계정 입력
@@ -31,5 +31,4 @@ const pool = new Pool({
 module.exports = {
     pool: pool,
     client:client
-
 };

@@ -1,7 +1,7 @@
 const boardProvider = require("../../app/board/boardProvider");
 const boardService = require("../../app/board/boardService");
 const baseResponse = require("../../../config/baseResponseStatus");
-const {response, errResponse} = require("../../../config/response");
+const { response, errResponse } = require("../../../config/response");
 
 /**
  * API No. 1
@@ -75,7 +75,7 @@ exports.deletePost = async (req, res)=>{
  * API Name : JWT decode
  * 
  */
- exports.check = async function (req, res) {
+ exports.check = async (req, res) => {
     const userIdResult = req.verifiedToken.userId;
     console.log(userIdResult);
     return res.send(response(baseResponse.TOKEN_VERIFICATION_SUCCESS));

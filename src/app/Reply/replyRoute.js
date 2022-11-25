@@ -1,6 +1,6 @@
 module.exports = (app) =>{
     const reply = require('./replyControler')
-    const jwtMiddleware = require('../../../config/jwtMiddleware');
+    // const jwtMiddleware = require('../../../config/jwtMiddleware');
 
     // 1. 댓글생성
     app.post('/app/reply', reply.writePost);

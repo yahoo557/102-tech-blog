@@ -1,7 +1,7 @@
-const randomProvider = require("../../app/random/randomProvider");
-const randomService = require("../../app/random/randomService");
+const randomProvider = require("./randomProvider");
+const randomService = require("./randomService");
 const baseResponse = require("../../../config/baseResponseStatus");
-const {response, errResponse} = require("../../../config/response");
+const { response, errResponse } = require("../../../config/response");
 
 /**
  * API No. 1
@@ -9,8 +9,8 @@ const {response, errResponse} = require("../../../config/response");
  * [POST] /app/random
  */
 exports.createAuthToken = (req, res) => {
-    const {nickname, instagram} = req.body;
-    return res.send(randomService.createAuthToken(nickname, instagram));
+    const {nickname} = req.body;
+    return res.send(randomService.createAuthToken(nickname));
 };
 
 /**
@@ -22,3 +22,4 @@ exports.getRandomBoyfriendImage = (req, res) => {
     const {authToken} = req.query
     return res.send(randomProvider.getRandomImage(authToken));
 };
+

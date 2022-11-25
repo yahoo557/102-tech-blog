@@ -84,8 +84,8 @@ exports.postSignIn = async function (email, password) {
             }, // 토큰의 내용(payload)
             secret_config.jwtsecret, // 비밀키
             {
-                expiresIn: "365d",
-                subject: "userInfo",
+                expiresIn: 3600*360,
+                subject: userInfoRows[0].id,
             } // 유효 기간 365일
         );
 
@@ -113,5 +113,10 @@ exports.editUser = async function (id, nickname) {
 }
 
 exports.deleteUser = async (id) => {
+    try{
+        const connection = await pool.getConnection(async(conn) => conn);
 
+    }catch (err){
+
+    }
 };

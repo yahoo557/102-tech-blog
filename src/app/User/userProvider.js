@@ -3,6 +3,14 @@ const { logger } = require("../../../config/winston");
 
 const userDao = require("./userDao");
 
+exports.dbTest = async ()=>{
+  const connection = await pool.getConnection(async (conn) => conn);
+  const testResult = await userDao.dbTest(connection);
+  connection.release();
+  return testResult; 
+
+};
+
 // Provider: Read 비즈니스 로직 처리
 
 exports.retrieveUserList = async function (email) {
@@ -56,3 +64,4 @@ exports.accountCheck = async function (email) {
 
   return userAccountResult;
 };
+
