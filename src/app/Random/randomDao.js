@@ -6,6 +6,7 @@ const createToken = (connection, )=>{
 }
 
 module.exports = {
-    
+    createToken,
+    selectImageS3
 };
   

@@ -12,7 +12,7 @@ module.exports = (app) =>{
     app.get('/app/board/:id', board.getPost);
     
     // 4. 게시글 수정
-    app.fetch('/app/board/:id', board.editPost);
+    app.patch('/app/board/:id', board.editPost);
 
     // 5. 게시글 삭제
     app.delete('/app/board/:id', board.deletePost);

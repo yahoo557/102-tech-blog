@@ -1,4 +1,4 @@
-const jwtMiddleware = require("../../../config/jwtMiddleware");
+// const jwtMiddleware = require("../../../config/jwtMiddleware");
 const userProvider = require("../../app/User/userProvider");
 const userService = require("../../app/User/userService");
 const baseResponse = require("../../../config/baseResponseStatus");
@@ -12,7 +12,9 @@ const {response, errResponse} = require("../../../config/response");
  * [GET] /app/test
  */
 exports.getTest = async function (req, res) {
-    return res.send(response(baseResponse.SUCCESS))
+    const test = await userProvider.dbTest();
+    return res.send(test)
+    // return res.send(response(baseResponse.SUCCESS))
 }
 
 /**
@@ -38,7 +40,7 @@ exports.postUsers = async function (req, res) {
     // 형식 체크 (by 정규표현식)
     if (!regexEmail.test(email))
         return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
-        
+
     const signUpResponse = await userService.createUser(
         email,
         password,
