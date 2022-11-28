@@ -5,9 +5,16 @@ const selectPostUser = async (connection,userId)=>{
     return [postRows];
 }
 
+// 게시글 리스트 조회 uesrId로
+const selectPostTitle = async (connection,title)=>{
+    const selectPostUserQuery = 'SLECET * FROM post WHERE title = $1 and status = "ONLINE" '
+    const [postRows] = await connection.query(selectPostUserQuery, [title])
+    return [postRows];
+}
+
 // 게시글 리스트 전체 조회 
 const selectPost = async (connection)=>{
-    const selectPostQuery = 'SLECET * FROM post WHERE status = "ONLINE" '
+    const selectPostQuery ='SLECET * FROM post WHERE status = "ONLINE" '
     const [postRows] = await connection.query(selectPostQuery)
     return [postRows];
 }
