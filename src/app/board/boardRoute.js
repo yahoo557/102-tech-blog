@@ -15,7 +15,7 @@ module.exports = (app) =>{
     app.patch('/app/board/:id', board.editPost);
 
     // 5. 게시글 삭제
-    app.delete('/app/board/:id', board.deletePost);
+    app.patch('/app/board/:id', board.deletePost);
     
 };
 

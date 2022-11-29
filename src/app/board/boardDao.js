@@ -1,8 +1,13 @@
 // 게시글 리스트 조회 uesrId로
 const selectPostUser = async (connection,userId)=>{
+    try{
     const selectPostUserQuery = 'SLECET * FROM post WHERE user_id = $1 and status = "ONLINE" '
-    const [postRows] = await connection.query(selectPostUserQuery, [userId])
-    return [postRows];
+    const postRows = await connection.query(selectPostUserQuery, [userId])
+    return postRows;
+    }catch(error){
+        return error
+    }
+
 }
 
 // 게시글 리스트 조회 uesrId로
@@ -14,17 +19,29 @@ const selectPostTitle = async (connection,title)=>{
 
 // 게시글 리스트 전체 조회 
 const selectPost = async (connection)=>{
-    const selectPostQuery ='SLECET * FROM post WHERE status = "ONLINE" '
-    const [postRows] = await connection.query(selectPostQuery)
-    return [postRows];
+    try{
+        const selectPostQuery ='SELECT * FROM post WHERE status = "ONLINE";'
+        const postRows = await connection.query(selectPostQuery)
+        return postRows;
+
+    }catch(error){
+        return error;
+    }
+    
 }
 
 // 게시글 생성
 const insertPost = async (connection, title, body, userId) =>{
-    const insertPostQuery = 'INSERT INTO post ("title", "body", "user_id" ) VALUES ($1, $2, $3) returning *'
-    const insertResult = await connection.query(insertPostQuery, [title, body, userId]);
-    return insertResult;
+    try{
+        const insertPostQuery = 'INSERT INTO post ("title", "body", "user_id" ) VALUES ($1, $2, $3) returning *'
+        const insertResult = await connection.query(insertPostQuery, [title, body, userId]);
+        return insertResult;
+
+    }catch(error){
+        return error;
+    }
 }
+    
 
 // 게시글 수정
 const updatePost = async (connection, title, body) =>{
