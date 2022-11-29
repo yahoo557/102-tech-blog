@@ -13,7 +13,7 @@ exports.getPostListByUser = async (userId) => {
 }
 
 exports.getPostList = async () => {
-    const connection = await pool.getConnection()
+    const connection = await pool.getConnection(async (conn) => conn);
     const getPostResult = boardDao.selectPost(connection)
     return getPostResult
 }
