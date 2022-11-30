@@ -15,3 +15,6 @@ exports.deletePost = async(postId) =>{
 
 }
 
+exports.editPost = async () =>{
+
+}

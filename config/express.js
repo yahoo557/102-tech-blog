@@ -15,6 +15,9 @@ module.exports = function () {
     app.use(methodOverride());
 
     app.use(cors());
+    const { swaggerUi, specs } = require("./swagger")
+
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
     // app.use(express.static(process.cwd() + '/public'));
 
     /* App (Android, iOS) */
