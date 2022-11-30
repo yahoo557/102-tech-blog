@@ -12,20 +12,16 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const {connect} = require("http2");
 
-// Service: Create, Update, Delete 비즈니스 로직 처리
+
 
 exports.createUser = async function (email, password, nickname) {
     try {
         // 이메일 중복 확인
         const emailRows = await userProvider.emailCheck(email);
-        if (emailRows.length > 0)
-            return errResponse(baseResponse.SIGNUP_REDUNDANT_EMAIL);
+        if (emailRows.length > 0) return errResponse(baseResponse.SIGNUP_REDUNDANT_EMAIL);
 
         // 비밀번호 암호화
-        const hashedPassword = await crypto
-            .createHash("sha512")
-            .update(password)
-            .digest("hex");
+        const hashedPassword = await crypto.createHash("sha512").update(password).digest("hex");
 
         const insertUserInfoParams = [email, hashedPassword, nickname];
 

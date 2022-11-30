@@ -21,16 +21,15 @@ exports.writePost = async (req,res) => {
 
 /**
  * API No. 2
- * API Name : 게시글 리스트 가져오기(제목으로 검색조회)
+ * API Name : 게시글 리스트 가져오기(제목, 작성자로 검색조회)
  * [GET] /app/board
  * 
  */ 
 exports.getPostList = async (req, res) =>{
-    const {title} = req.query
+    const {title, userId} = req.query
     // 게시글 전체 조회
-    if(!title){
-        const postListResponse = await boardProvider.getPostList();
-        return res.send(postListResponse)
+    if(title || userId){
+        return res.send(await boardProvider.getPostList(title, userId), )
     }
     // 게시글 제목으로 검색
     const postListResponse = await boardProvider.getPostList(title);
@@ -78,5 +77,5 @@ exports.deletePost = async (req, res)=>{
  exports.check = async (req, res) => {
     const userIdResult = req.verifiedToken.userId;
     console.log(userIdResult);
-    return res.send(response(baseResponse.TOKEN_VERIFICATION_SUCCESS));
+    return res.send(response(baseResponse.TOKEN_VERIFICATION_SUCCESS, userIdResult));
 };

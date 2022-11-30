@@ -1,23 +1,24 @@
 const { pool } = require("../../../config/database")
-// const { lo}
 const boardDao = require("./boardDao")
 
 
 exports.getPostListByTitle = async (title) => {
-    const connection = await pool.getConnection()
+    const connection = await pool.connect()
+    return boardDao.selectPostTitle(connection,title);
 }
 
 exports.getPostListByUser = async (userId) => {
     const connection = await pool.connect()
-    const getPostResult = boardDao.getPostListUser
+    return boardDao.selectPostUser(connection, userId);
 }
 
-exports.getPostList = async () => {
-    const connection = pool;
-    connection.connect();
-    const getPostResult = boardDao.selectPost(connection)
-    
-    return getPostResult
+exports.getPostList = async (title, userId) => {
+    const connection = await pool.connect();
+    return boardDao.selectPost(connection)
 }
 
 
+exports.getPost = async (postId)=>{
+    const connection = await pool.connect();
+    return boardDao.selectPostId(connection, postId);
+}
