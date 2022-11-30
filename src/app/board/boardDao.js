@@ -23,7 +23,6 @@ const selectPost = async (connection)=>{
         const selectPostQuery ='SELECT * FROM post WHERE status = "ONLINE";'
         const postRows = await connection.query(selectPostQuery)
         return postRows;
-
     }catch(error){
         return error;
     }
@@ -31,14 +30,16 @@ const selectPost = async (connection)=>{
 }
 
 // 게시글 생성
-const insertPost = async (connection, title, body, userId) =>{
+const insertPost = async (poolClient, title, body, userId) =>{
     try{
+        await poolClient.query("BEGIN")
         const insertPostQuery = 'INSERT INTO post ("title", "body", "user_id" ) VALUES ($1, $2, $3) returning *'
-        const insertResult = await connection.query(insertPostQuery, [title, body, userId]);
-        return insertResult;
-
+        const insertResult = await poolClient.query(insertPostQuery, [title, body, userId]);
+        await poolClient.query("COMMIT");
     }catch(error){
         return error;
+    }finally{
+        poolClient.release();
     }
 }
     
