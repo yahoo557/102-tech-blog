@@ -11,6 +11,7 @@ const {response, errResponse} = require("../../../config/response");
  * API Name : 테스트 API
  * [GET] /app/test
  */
+
 exports.getTest = async function (req, res) {
     const test = await userProvider.dbTest();
     return res.send(test)

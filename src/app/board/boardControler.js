@@ -14,9 +14,7 @@ exports.writePost = async (req,res) => {
     const {title, body} = req.body;
     //빈값 체크
     if(!title || !body) return res.send(response(baseResponse.BOARD_BODY_EMPTY));
-
-    const writeResponse = await postService.createPost(title,body);
-    return res.send(writeResponse)
+    return res.send(await boardService.createPost(title,body));
 }
 
 /**
