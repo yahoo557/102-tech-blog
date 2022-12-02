@@ -1,3 +1,10 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Reply
+ *   description: 댓글 생성 조회 수정 삭제
+ */
+
 module.exports = (app) =>{
     const reply = require('./replyControler')
     // const jwtMiddleware = require('../../../config/jwtMiddleware');

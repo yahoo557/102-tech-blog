@@ -39,33 +39,22 @@ const selectPostId = async (connection, id)=>{
 }
 
 // 게시글 생성
-const insertPost = async (poolClient, title, body, userId) =>{
-    try{
-        await poolClient.query("BEGIN")
-        const insertPostQuery = 'INSERT INTO post ("title", "body", "user_id" ) VALUES ($1, $2, $3) returning *;'
-        const insertResult = await poolClient.query(insertPostQuery, [title, body, userId]);
-        await poolClient.query("COMMIT");
-        poolClient.release();
-        return insertResult
-    }catch(error){
-        poolClient.release();
-        return error;
-    }
+const insertPost = async (connection, title, body) =>{
+    const insertPostQuery = 'INSERT INTO post ("title", "body", "user_id" ) VALUES ($1, $2, $3) returning *;'
+    return await connection.query(insertPostQuery, [title, body, 1]);
 }
     
 
 // 게시글 수정
-const updatePost = async (connection, title, body) =>{
-    const updatePostQuery = 'UPDATE post SET (title, body) = ($1, $2) returning *;'
-    const updateResult = await connection.query(updatePostQuery, [title, body])
-    return updateResult
+const updatePost = async (connection, id,title, body) =>{
+    const updatePostQuery = 'UPDATE post SET (title, body) = ($1, $2) WHERE id = $3 returning *;'
+    return await poolClient.query(insertPostQuery, [title, body, 1]);
 }
 
 // 게시글 삭제
 const deletePost = async (connection, postId)=>{
     const deletePostQuery = `UPDATE post SET status = 'OFFLINE' WHERE id = $1;`
-    const deleteResult = await connection.query(deletePostQuery, [postId]);
-    return deleteResult;
+    return await connection.query(deletePostQuery, [postId]);
 }
 
 
