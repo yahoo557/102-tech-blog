@@ -4,17 +4,8 @@ const boardDao = require("./boardDao")
 
 exports.getPostListByTitle = async (title) => {
     const connection = await pool.connect()
-    // try{
-    //     await connection.query("BEGIN")
-    const selectPostResult = boardDao.selectPostTitle(connection,title);
-    //     await connection.query("COMMIT");
-    //     await connection.release();
-    return selectPostResult
-    // }catch(error){
-    //     await connection.query("ROLLBACK");
-    //     console.log(error);
-    //     return error
-    // }
+    return boardDao.selectPostTitle(connection,title);
+
 }
 
 exports.getPostListByUser = async (userId) => {

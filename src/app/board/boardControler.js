@@ -26,12 +26,18 @@ exports.writePost = async (req,res) => {
  */ 
 exports.getPostList = async (req, res) =>{
     const {title, userId} = req.query
-    // 게시글 전체 조회
-    if(title || userId) return res.send(await boardProvider.getPostList(title, userId))
+    // 게시글 제목과 작성자 둘다로 검색
+    if(title&&userId) return res.send(await boardProvider.getPostListByUserTitle(title, userId));
 
     // 게시글 제목으로 검색
-    const postListResponse = await boardProvider.getPostList(title);
-    return res.send(postListResponse)
+    if(title) return res.send(await boardProvider.getPostListByTitle(title));
+
+    // 작성자로로 검색
+    if(userId) return res.send(await boardProvider.getPostListByUser(userId));
+
+
+    // 게시글 전체 조회
+    return res.send(await boardProvider.getPostList(title));
 };
 
 /**
@@ -63,8 +69,7 @@ exports.editPost = async (req, res) =>{
  */
 exports.deletePost = async (req, res)=>{
     const postId = req.params.id
-    const deleteResponse = await boardService.deletePost(postId);
-    return res.send(deleteResponse)
+    return res.send(await boardService.deletePost(postId));
 };
 
 /**

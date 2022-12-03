@@ -3,6 +3,17 @@ const replyService = require("../../app/reply/replyService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse} = require("../../../config/response");
 
+/**
+ * API No. 0
+ * API Name : IP주소 테스트
+ * [POST] /app/reply/test
+ * header : jwt
+ * body : {title : , body}
+ */
+exports.replyTest = async (req,res)=>{
+    console.log(req.socket.remoteAddress);
+    return res.send(req.socket.remoteAddress);
+}
 
 /**
  * API No. 1
@@ -11,13 +22,14 @@ const { response, errResponse} = require("../../../config/response");
  * header : jwt
  * body : {title : , body}
  */
-exports.writePost = async (req,res) => {
-    const {postId, replyId, body} = req.body;
+exports.writeReply = async (req,res) => {
+    let {postId, nickname,  body} = req.body;
+    const userIp = req.socket.remoteAddress
     //빈값 검증
     if(!body||!postId) return res.send(response(baseResponse.REPLY_POST_ID_EMPTY))
-
+    if(!nickname) nickname = "익명의 댓글 작성자";
     //댓글 작성
-    const writeResponse =  await replyService.createReply(postId, replyId || 0 , body);
+    const writeResponse =  await replyService.createReply(postId, body, nickname, userIp);
     return res.send(writeResponse)
 }
 
