@@ -26,7 +26,7 @@ exports.deletePost = async(id) =>{
     const connection = await pool.connect();
     try{
         await connection.query("BEGIN")
-        const deletePostResult = boardDao.deletePost(id);
+        const deletePostResult = boardDao.deletePost(connection,id);
         await connection.query("COMMIT");
         await connection.release();
         return deletePostResult;
