@@ -9,7 +9,8 @@ exports.createPost = async (title, body) =>{
     try{
         await connection.query("BEGIN")
         const createPostResult = boardDao.insertPost(connection, title, body);
-        await connection.query("COMMIT").release();
+        await connection.query("COMMIT");
+        await connection.release();
         return createPostResult;
 
     }catch (error){
@@ -21,21 +22,32 @@ exports.createPost = async (title, body) =>{
 
 }
 
-exports.deletePost = async(postId) =>{
-    const poolClient = pool.connect()
-
-}
-
-exports.editPost = async (title, body) =>{
+exports.deletePost = async(id) =>{
     const connection = await pool.connect();
     try{
         await connection.query("BEGIN")
-        const updatePostResult = boardDao.updatePost(connection, title, body);
-        await connection.query("COMMIT").release();
+        const deletePostResult = boardDao.deletePost(id);
+        await connection.query("COMMIT");
+        await connection.release();
+        return deletePostResult;
+    }catch(error){
+        console.log(error);
+        await connection.query("ROLLBACK");
+        return error;
+    }
+}
+
+exports.editPost = async (id, title, body) =>{
+    const connection = await pool.connect();
+    try{
+        await connection.query("BEGIN")
+        const updatePostResult = boardDao.updatePost(connection,id, title, body);
+        await connection.query("COMMIT");
+        await connection.release();
         return updatePostResult;
     }catch(error){
-        await connection.rollback();
         console.log(error);
+        await connection.query("ROLLBACK");
         return error;
     }
 }
