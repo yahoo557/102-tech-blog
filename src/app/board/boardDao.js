@@ -10,6 +10,12 @@ const selectPostTitle = async (connection,title)=>{
     return await connection.query(selectPostTitleQuery, [title]);
 }
 
+// 게시글 리스트 조회 userId와 title로
+const selectPostTitleUser = async (connection,title, userId)=> {
+    const selectPostTitleUserQuery = `SELECT * FROM post WHERE (title = $1 or user_id = $2)and status = 'ONLINE'; `
+    return await connection.query(selectPostTitleUserQuery, [title, userId]);
+}
+
 // 게시글 리스트 전체 조회 
 const selectPost = async (connection)=>{
     const selectPostQuery = `SELECT * FROM post WHERE status = 'ONLINE';`
@@ -45,6 +51,7 @@ const deletePost = async (connection, postId)=>{
 module.exports = {
     selectPostUser,
     selectPostTitle,
+    selectPostTitleUser,
     selectPost,
     insertPost,
     updatePost,

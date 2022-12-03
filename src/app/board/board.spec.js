@@ -1,8 +1,12 @@
-const {  } = require("./boardControler");
+const { writePost } = require("./boardControler");
+const baseResponse = require("../../../config/baseResponseStatus");
 
+test('게시글은 제목과 본문이 비어 있을수 없다.', ()=>{
+    expect(writePost({body :{"body": "", "title":""}} )).toEqual(baseResponse.BOARD_BODY_EMPTY);
+    expect(writePost({body :{"body":"본문은 값이 있습니다.", "title": ""}})).toEqual(baseResponse.BOARD_BODY_EMPTY);
+    expect(writePost({body :{"body":"", "title": "제목은 값이 있습니다."}})).toEqual(baseResponse.BOARD_BODY_EMPTY);
+})
 
-test('입력한 이메일 주소에는 "@" 문자가 1개만 있어야 이메일 형식이다.', () => {
-    expect(isEmail("my-email@domain.com")).toEqual(true); // 1개만 있는 상황
-    expect(isEmail("my-email@@@@domain.com")).toEqual(false); // 여러개 있는 상황
-    expect(isEmail("my-emaildomain.com")).toEqual(false); // 하나도 없는 상황
-});
+test('유저 권한이 없다면 게시글 작성을 할수 없습니다.', ()=>{
+
+})

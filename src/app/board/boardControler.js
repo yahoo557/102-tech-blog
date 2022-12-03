@@ -13,7 +13,8 @@ const { response, errResponse } = require("../../../config/response");
 exports.writePost = async (req,res) => {
     const {title, body} = req.body;
     //빈값 체크
-    if(!title || !body) return res.send(response(baseResponse.BOARD_BODY_EMPTY));
+    if(!body) return res.send(response(baseResponse.BOARD_BODY_EMPTY));
+    if(!title) return res.send(response(baseResponse.BOARD_TITLE_EMPTY));
     return res.send(await boardService.createPost(title,body));
 }
 
@@ -26,9 +27,8 @@ exports.writePost = async (req,res) => {
 exports.getPostList = async (req, res) =>{
     const {title, userId} = req.query
     // 게시글 전체 조회
-    if(title || userId){
-        return res.send(await boardProvider.getPostList(title, userId), )
-    }
+    if(title || userId) return res.send(await boardProvider.getPostList(title, userId))
+
     // 게시글 제목으로 검색
     const postListResponse = await boardProvider.getPostList(title);
     return res.send(postListResponse)
