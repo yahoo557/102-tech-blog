@@ -48,7 +48,7 @@ exports.getReplyList = async (req, res) =>{
     //특정 게시글에 작성된 모든 댓글 가져오기
     if(postId) return res.send(await replyProvider.getReplyListPost(postId));
 
-    //특정 유저가
+    //특정 유저가 작성한 모든 댓글 가져오기
     return res.send(await replyProvider.getReplyListUser(userId));
 }
 
