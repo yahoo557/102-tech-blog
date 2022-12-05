@@ -1,5 +1,5 @@
-const express = require('./config/express');
-const {logger} = require('./config/winston');
+const express = require('./server/config/express');
+const {logger} = require('./server/config/winston');
 
 require("dotenv").config();
 
