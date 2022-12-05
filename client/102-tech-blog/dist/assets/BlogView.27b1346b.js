@@ -1,0 +1,1 @@
+import{_ as e,o,c as s,a as _}from"./index.1abb48d9.js";const t={},c={class:"blog"},n=_("h1",null,"This is an blog page",-1),a=[n];function l(i,r){return o(),s("div",c,a)}const f=e(t,[["render",l]]);export{f as default};
