@@ -49,6 +49,7 @@ exports.getPostList = async (req, res) =>{
  * API No. 3
  * API Name : 특정 게시글 가져오기
  * [GET] /app/board/{id}
+ * TODO : 조회수 올려야함
  */
 exports.getPost = async (req, res) =>{
     return res.send(await boardProvider.getPost(req.params.id));
