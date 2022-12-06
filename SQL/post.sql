@@ -20,6 +20,8 @@ CREATE TABLE "public"."post" (
     "body" text,
     "user_id" int4,
     "status" varchar(10) DEFAULT 'ONLINE',
+    "like_count" int4 DEFAULT 0,
+    "view_count" int4 DEFAULT 0,
     "updated_at" timestamp DEFAULT now(),
     "created_at" timestamp DEFAULT now(),
     PRIMARY KEY ("id")
@@ -38,6 +40,7 @@ CREATE TRIGGER update_post_updated_at
         post
     FOR EACH ROW
 EXECUTE PROCEDURE update_updated_at_post();
+
 
 INSERT INTO "public"."post" ("title", "body", "user_id" ) VALUES
 ( '테스트 게시글 1', '테스트 본문 1', 1 ),
