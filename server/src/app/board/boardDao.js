@@ -22,6 +22,18 @@ const selectPost = async (connection)=>{
     return await connection.query(selectPostQuery);
 }
 
+// 인기 게시글 리스트 전체 조회
+const selectHotPost = async (connection)=>{
+    const selectHotPostQuery = `SELECT * FROM post WHERE status = 'ONLINE' ORDER BY like_count LIMIT 3;`
+    return await connection.query(selectHotPostQuery);
+}
+
+// 카테고리 별 게시글 리스트 전체 조회
+const selectPostCategory = async (category,connection)=>{
+    const selectPostCategoryQuery = `SELECT * FROM post WHERE category = '$1' and status = 'ONLINE' ;`
+    return await connection.query(selectPostCategoryQuery, [category]);
+}
+
 // 특정 게시글 조회
 const selectPostId = async (connection, id)=>{
     const selectPostQuery = `SELECT * FROM post WHERE id = $1 and status = 'ONLINE';`
@@ -52,6 +64,8 @@ module.exports = {
     selectPostUser,
     selectPostTitle,
     selectPostTitleUser,
+    selectPostCategory,
+    selectHotPost,
     selectPost,
     insertPost,
     updatePost,

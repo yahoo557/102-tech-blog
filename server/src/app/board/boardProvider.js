@@ -13,12 +13,21 @@ exports.getPostListByUser = async (userId) => {
     return boardDao.selectPostUser(connection, userId);
 }
 
+exports.getHotPostList = async () => {
+    const connection = await pool.connect()
+    return boardDao.selectHotPost(connection);
+}
+exports.getPostListByCategory = async(category) =>{
+    const connection = await pool.connect();
+    return boardDao.selectPostCategory(category, connection);
+}
+
 exports.getPostListByUserTitle = async (title,userId)=>{
     const connection = await pool.connect();
     return boardDao.selectPostTitleUser(connection, title, userId);
 }
 
-exports.getPostList = async (title, userId) => {
+exports.getPostList = async () => {
     const connection = await pool.connect();
     return boardDao.selectPost(connection);
 }

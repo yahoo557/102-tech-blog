@@ -25,7 +25,7 @@ exports.writePost = async (req,res) => {
  * 
  */ 
 exports.getPostList = async (req, res) =>{
-    const {title, userId} = req.query
+    const {title, userId, category, hot} = req.query
     // 게시글 제목과 작성자 둘다로 검색
     if(title&&userId) return res.send(await boardProvider.getPostListByUserTitle(title, userId));
 
@@ -35,6 +35,11 @@ exports.getPostList = async (req, res) =>{
     // 작성자로로 검색
     if(userId) return res.send(await boardProvider.getPostListByUser(userId));
 
+    // 카테고리로 조회
+    if(category) return res.send(await boardProvider.getPostListByCategory(category))
+
+    // 인기게시글 조회
+    if(hot) return res.send(await boardProvider.getHotPostList())
 
     // 게시글 전체 조회
     return res.send(await boardProvider.getPostList(title));
@@ -82,3 +87,4 @@ exports.deletePost = async (req, res)=>{
     console.log(userIdResult);
     return res.send(response(baseResponse.TOKEN_VERIFICATION_SUCCESS, userIdResult));
 };
+
