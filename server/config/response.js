@@ -15,4 +15,7 @@ const response = ({isSuccess, code, message}, result) => {
       }
   };
   
-  module.exports = { response, errResponse };
+  module.exports = {
+      response,
+      errResponse
+  };

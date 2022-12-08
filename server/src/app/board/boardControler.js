@@ -3,6 +3,7 @@ const boardService = require("./boardService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse } = require("../../../config/response");
 
+
 /**
  * API No. 1
  * API Name : 게시글 작성

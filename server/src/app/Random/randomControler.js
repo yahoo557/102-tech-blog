@@ -23,3 +23,12 @@ exports.getRandomBoyfriendImage = (req, res) => {
     return res.send(randomProvider.getRandomImage(authToken));
 };
 
+
+/**
+ * API No. 3
+ * API Name : 랜덤 퀴즈
+ * [GET] /app/quiz
+ */
+exports.getQuiz = async(req,res)=>{
+    return res.send(await randomProvider.getRandomQuiz());
+}

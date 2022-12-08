@@ -17,19 +17,13 @@ const {connect} = require("http2");
 exports.createUser = async function (email, password, nickname) {
     try {
         // 이메일 중복 확인
-        const emailRows = await userProvider.emailCheck(email);
-        if (emailRows.length > 0) return errResponse(baseResponse.SIGNUP_REDUNDANT_EMAIL);
+        if (await userProvider.emailCheck(email).length > 0) return errResponse(baseResponse.SIGNUP_REDUNDANT_EMAIL);
 
         // 비밀번호 암호화
         const hashedPassword = await crypto.createHash("sha512").update(password).digest("hex");
 
-        const insertUserInfoParams = [email, hashedPassword, nickname];
+        const userIdResult = await userDao.insertUserInfo(await pool.connect(), [email, hashedPassword, nickname]);
 
-        const connection = await pool.getConnection(async (conn) => conn);
-
-        const userIdResult = await userDao.insertUserInfo(connection, insertUserInfoParams);
-        console.log(`추가된 회원 : ${userIdResult[0].insertId}`)
-        connection.release();
         return response(baseResponse.SUCCESS);
 
 
@@ -50,26 +44,22 @@ exports.postSignIn = async function (email, password) {
         const selectEmail = emailRows[0].email
 
         // 비밀번호 확인
-        const hashedPassword = await crypto
-            .createHash("sha512")
-            .update(password)
-            .digest("hex");
+        const hashedPassword = await crypto.createHash("sha512").update(password).digest("hex");
 
         const selectUserPasswordParams = [selectEmail, hashedPassword];
         const passwordRows = await userProvider.passwordCheck(selectUserPasswordParams);
 
-        if (passwordRows[0].password !== hashedPassword) {
-            return errResponse(baseResponse.SIGNIN_PASSWORD_WRONG);
-        }
+        if (passwordRows[0].password !== hashedPassword) return errResponse(baseResponse.SIGNIN_PASSWORD_WRONG);
+
 
         // 계정 상태 확인
         const userInfoRows = await userProvider.accountCheck(email);
 
-        if (userInfoRows[0].status === "INACTIVE") {
-            return errResponse(baseResponse.SIGNIN_INACTIVE_ACCOUNT);
-        } else if (userInfoRows[0].status === "DELETED") {
-            return errResponse(baseResponse.SIGNIN_WITHDRAWAL_ACCOUNT);
-        }
+        if (userInfoRows[0].status === "ONLINE") return errResponse(baseResponse.SIGNIN_INACTIVE_ACCOUNT);
+
+        if (userInfoRows[0].status === "OFFLINE") return errResponse(baseResponse.SIGNIN_WITHDRAWAL_ACCOUNT);
+
+
 
         console.log(userInfoRows[0].id) // DB의 userId
 
