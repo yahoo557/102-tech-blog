@@ -28,17 +28,17 @@ exports.postUsers = async function (req, res) {
     const {email, password, nickname} = req.body;
 
     // 빈 값 체크
-    if (!email) return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
+    if (!email) return res.status(400).send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
 
 
     // 길이 체크
-    if (email.length > 30) return res.send(response(baseResponse.SIGNUP_EMAIL_LENGTH));
+    if (email.length > 30) return res.status(400).send(response(baseResponse.SIGNUP_EMAIL_LENGTH));
 
 
     // 형식 체크 (by 정규표현식)
-    if (!regexEmail.test(email)) return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
+    if (!regex.EMAIL_REG.test(email)) return res.status(400).send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
 
-    return res.send(await userService.createUser(email, password, nickname));
+    return res.status(200).send(await userService.createUser(email, password, nickname));
 };
 
 /**
@@ -77,7 +77,6 @@ exports.getUserById = async (req, res) => {
 };
 
 
-// TODO: After 로그인 인증 방법 (JWT)
 /**
  * API No. 4
  * API Name : 로그인 API
@@ -89,12 +88,10 @@ exports.login = async (req, res) => {
     const {email, password} = req.body;
 
     // TODO: email, password 형식적 Validation
-    if(!email) return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY))
-
-
-    const signInResponse = await userService.postSignIn(email, password);
-
-    return res.status(200).send(signInResponse);
+    if(!email) return res.send(response(baseResponse.SIGNIN_EMAIL_EMPTY))
+    if(!regex.EMAIL_REG.test(email)) return res.status(400).send(response(baseResponse.SIGNIN_EMAIL_ERROR_TYPE));
+    if(!password) return res.status(400).send(response(baseResponse.SIGNIN_PASSWORD_EMPTY));
+    return res.status(200).send(await userService.postSignIn(email, password));
 };
 
 
@@ -133,7 +130,7 @@ exports.patchUsers = async function (req, res) {
 /** JWT 토큰 검증 API
  * [GET] /app/auto-login
  */
-exports.check = async function (req, res) {
+exports.check = async (req, res) => {
     const userIdResult = req.verifiedToken.userId;
     console.log(userIdResult);
     return res.send(response(baseResponse.TOKEN_VERIFICATION_SUCCESS));
