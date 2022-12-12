@@ -14,8 +14,7 @@ const jwtMiddleware = (req, res, next) => {
     }
 
     // create a promise that decodes the token
-    const p = new Promise(
-        (resolve, reject) => {
+    const p = new Promise( (resolve, reject) => {
             jwt.verify(token, secret_config.jwtsecret , (err, verifiedToken) => {
                 if(err) reject(err);
                 resolve(verifiedToken)
@@ -23,6 +22,7 @@ const jwtMiddleware = (req, res, next) => {
         }
     );
     console.log(p)
+
     // if it has failed to verify, it will return an error message
     const onError = (error) => {
         return res.send(errResponse(baseResponse.TOKEN_VERIFICATION_FAILURE))
