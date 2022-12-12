@@ -32,6 +32,9 @@ module.exports = {
     USER_STATUS_EMPTY : { "isSuccess": false, "code": 2018, "message": "회원 상태값을 입력해주세요" },
 
     BOARD_TITLE_EMPTY : {"isSuccess": false, "code": 2001, "message":"제목을 입력해주세요"},
+    BOARD_USER_ID_INVALID : {"isSuccess": false, "code": 2001, "message":"정수만 입력해주세요"},
+    BAORD_CATEGORY_INVALID : {"isSuccess": false, "code": 2001, "message":"존재하는 카테고리 명을 입력해주세요"},
+    BOARD_POST_ID_INVALID : {"isSuccess": false, "code": 2001, "message":"정수만 입력해주세요"},
     BOARD_BODY_EMPTY : {"isSuccess": false, "code": 2001, "message":"본문을 입력해주세요"},
     REPLY_POST_ID_EMPTY: {"isSuccess": false, "code": 2001, "message":"postId를 입력해주세요"},
 

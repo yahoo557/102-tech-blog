@@ -1,6 +1,7 @@
 const boardProvider = require("./boardProvider");
 const boardService = require("./boardService");
 const baseResponse = require("../../../config/baseResponseStatus");
+const regex = require("../../../config/regex")
 const { response, errResponse } = require("../../../config/response");
 
 
@@ -14,36 +15,40 @@ const { response, errResponse } = require("../../../config/response");
 exports.writePost = async (req,res) => {
     const {title, body} = req.body;
     //빈값 체크
-    if(!body) return res.send(response(baseResponse.BOARD_BODY_EMPTY));
-    if(!title) return res.send(response(baseResponse.BOARD_TITLE_EMPTY));
-    return res.send(await boardService.createPost(title,body));
+    if(!body) return res.status(400).send(response(baseResponse.BOARD_BODY_EMPTY));
+
+    if(!title) return res.status(400).send(response(baseResponse.BOARD_TITLE_EMPTY));
+
+    return res.send(response(baseResponse.SUCCESS, await boardService.createPost(title,body)));
 }
 
 /**
  * API No. 2
- * API Name : 게시글 리스트 가져오기(제목, 작성자로 검색조회)
+ * API Name : 게시글 리스트 가져오기(제목, 작성자로 가져오기, 인기게시글 가져오기)
  * [GET] /app/board
  * 
  */ 
 exports.getPostList = async (req, res) =>{
     const {title, userId, category, hot} = req.query
+    if(!regex.NUMBER_ID_REG.test(userId)) return res.status(400).send(response(baseResponse.BOARD_USER_ID_INVALID));
+
     // 게시글 제목과 작성자 둘다로 검색
-    if(title&&userId) return res.send(await boardProvider.getPostListByUserTitle(title, userId));
+    if(title&&userId) return res.status(200).send(response(baseResponse.SUCCESS, await boardProvider.getPostListByUserTitle(title, userId)));
 
     // 게시글 제목으로 검색
-    if(title) return res.send(await boardProvider.getPostListByTitle(title));
+    if(title) return res.status(200).send(response(baseResponse.SUCCESS, await boardProvider.getPostListByTitle(title)));
 
-    // 작성자로로 검색
-    if(userId) return res.send(await boardProvider.getPostListByUser(userId));
+    // 작성자로 검색
+    if(userId) return res.status(200).send(response(baseResponse.SUCCESS, await boardProvider.getPostListByUser(userId)));
 
     // 카테고리로 조회
-    if(category) return res.send(await boardProvider.getPostListByCategory(category))
+    if(category) return res.status(200).send(response(baseResponse.SUCCESS, await boardProvider.getPostListByCategory(category)));
 
     // 인기게시글 조회
-    if(hot) return res.send(await boardProvider.getHotPostList())
+    if(hot) return res.status(200).send(await boardProvider.getHotPostList())
 
     // 게시글 전체 조회
-    return res.send(await boardProvider.getPostList(title));
+    return res.status(200).send(await boardProvider.getPostList(title));
 };
 
 /**
@@ -52,7 +57,10 @@ exports.getPostList = async (req, res) =>{
  * [GET] /app/board/{id}
  */
 exports.getPost = async (req, res) =>{
-    return res.send(await boardProvider.getPost(req.params.id));
+
+    if(!regex.NUMBER_ID_REG.test(req.params.id)) return res.status(400).send(response(baseResponse.BOARD_POST_ID_INVALID));
+
+    return res.status(200).send(response(baseResponse.SUCCESS, await boardProvider.getPost(req.params.id)));
 };
 
 
@@ -63,8 +71,12 @@ exports.getPost = async (req, res) =>{
  */
 exports.editPost = async (req, res) =>{
     const {title, body} = req.body
-    const editResponse = await boardService.editPost(req.params.id, title, body);
-    return res.send(editResponse)
+
+    if(!title) return res.status(400).send(response(baseResponse.BOARD_TITLE_EMPTY));
+    if(!body) return res.status(400).send(response(baseResponse.BOARD_BODY_EMPTY));
+    if(!regex.NUMBER_ID_REG.test(req.params.id)) return res.status(400).send(response(baseResponse.BOARD_POST_ID_INVALID));
+
+    return res.status(200).send(response(baseResponse.SUCCESS, await boardService.editPost(req.params.id, title, body)));
 }
 
 
@@ -74,8 +86,10 @@ exports.editPost = async (req, res) =>{
  * [DELETE] /app/board/{id}
  */
 exports.deletePost = async (req, res)=>{
-    const postId = req.params.id
-    return res.send(await boardService.deletePost(postId));
+
+    if(!regex.NUMBER_ID_REG.test(req.params.id)) return res.status(400).send(response(baseResponse.BOARD_POST_ID_INVALID));
+
+    return res.send(response(baseResponse.SUCCESS, await boardService.deletePost(req.params.id)));
 };
 
 /**
