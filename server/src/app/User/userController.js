@@ -11,7 +11,6 @@ const regex = require("../../../config/regex");
  * API Name : 테스트 API
  * [GET] /app/test
  */
-
 exports.getTest = async (req, res) => {
     return res.send(await userProvider.dbTest());
 }
@@ -21,7 +20,7 @@ exports.getTest = async (req, res) => {
  * API Name : 유저 생성 (회원가입) API
  * [POST] /app/users
  */
-exports.postUsers = async function (req, res) {
+exports.postUsers = async (req, res) => {
     /**
      * Body: email, password, nickname
      */

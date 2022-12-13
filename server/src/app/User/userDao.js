@@ -6,7 +6,7 @@ const selectUser = async  (connection) => {
 
 // 이메일로 회원 조회
 const selectUserEmail = async (connection, email) => {
-  const selectUserEmailQuery = `SELECT email, nickname FROM users WHERE email = $1 and status = 'ONLINE';`;
+  const selectUserEmailQuery = `SELECT email FROM users WHERE email = $1 and status = 'ONLINE';`;
   return await connection.query(selectUserEmailQuery, [email]);
 }
 
@@ -18,7 +18,7 @@ const selectUserId = async (connection, userId) => {
 
 // 유저 생성
 const insertUserInfo = async (connection, insertUserInfoParams) => {
-  const insertUserInfoQuery = `INSERT INTO users ("email", "password", "nickname") VALUES ($1, $2, $3);`;
+  const insertUserInfoQuery = `INSERT INTO users ("email", "password", "nickname") VALUES ($1, $2, $3) returning id;`;
   return await connection.query(insertUserInfoQuery, insertUserInfoParams);
 }
 
