@@ -52,7 +52,6 @@ exports.passwordCheck = async (selectUserPasswordParams) => {
 
 exports.accountCheck = async function (email) {
   const connection = await pool.connect();
-
   return await userDao.selectUserAccount(connection, email);
 };
 
