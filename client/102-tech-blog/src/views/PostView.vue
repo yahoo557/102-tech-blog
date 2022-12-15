@@ -1,10 +1,10 @@
+<template>
+  <h1>{{ title }}</h1>
+</template>
+
+
 <script setup lang="ts">
-import Article from "../components/Article.vue";
+
 
 </script>
 
-<template>
-  <main>
-    <Article />
-  </main>
-</template>

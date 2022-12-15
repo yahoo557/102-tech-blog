@@ -1,10 +1,9 @@
 <template>
-  <main class="blog" :class="{ 'blog--reading': this.post }">
-    <BlogNav/>
-    <BlogFeed/>
-    <BlogPost/>
-    <BlogFooter/>
-  </main>
+  <BlogNav />
+  <BlogFeed />
+  <BlogPost />
+  <BlogFooter />
+  <router-view/>
 </template>
 
 <script lang="ts">
@@ -13,6 +12,6 @@ import BlogFeed from "@/components/BlogFeed.vue";
 import BlogPost from "@/components/BlogPost.vue";
 import BlogFooter from "@/components/BlogFooter.vue";
 export default {
-  components: {BlogFooter, BlogPost, BlogFeed, BlogNav}
-}
+  components: { BlogFooter, BlogPost, BlogFeed, BlogNav },
+};
 </script>
