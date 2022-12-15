@@ -3,7 +3,7 @@ const userProvider = require("./userProvider");
 const userService = require("./userService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const {response, errResponse} = require("../../../config/response");
-
+const regex = require("../../../config/regex");
 
 
 /**
@@ -11,11 +11,8 @@ const {response, errResponse} = require("../../../config/response");
  * API Name : 테스트 API
  * [GET] /app/test
  */
-
-exports.getTest = async function (req, res) {
-    const test = await userProvider.dbTest();
-    return res.send(test)
-    // return res.send(response(baseResponse.SUCCESS))
+exports.getTest = async (req, res) => {
+    return res.send(await userProvider.dbTest());
 }
 
 /**
@@ -23,32 +20,24 @@ exports.getTest = async function (req, res) {
  * API Name : 유저 생성 (회원가입) API
  * [POST] /app/users
  */
-exports.postUsers = async function (req, res) {
-
+exports.postUsers = async (req, res) => {
     /**
      * Body: email, password, nickname
      */
     const {email, password, nickname} = req.body;
 
     // 빈 값 체크
-    if (!email)
-        return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
+    if (!email) return res.status(400).send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
+
 
     // 길이 체크
-    if (email.length > 30)
-        return res.send(response(baseResponse.SIGNUP_EMAIL_LENGTH));
+    if (email.length > 30) return res.status(400).send(response(baseResponse.SIGNUP_EMAIL_LENGTH));
+
 
     // 형식 체크 (by 정규표현식)
-    if (!regexEmail.test(email))
-        return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
+    if (!regex.EMAIL_REG.test(email)) return res.status(400).send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
 
-    const signUpResponse = await userService.createUser(
-        email,
-        password,
-        nickname
-    );
-
-    return res.send(signUpResponse);
+    return res.status(200).send(await userService.createUser(email, password, nickname));
 };
 
 /**
@@ -56,31 +45,26 @@ exports.postUsers = async function (req, res) {
  * API Name : 유저 조회 API (+ 이메일로 검색 조회)
  * [GET] /app/users
  */
-exports.getUsers = async function (req, res) {
-
+exports.getUsers = async (req, res) => {
     /**
      * Query String: email
      */
     const email = req.query.email;
 
-    if (!email) {
+    if (!email)
         // 유저 전체 조회
-        const userListResult = await userProvider.retrieveUserList();
-        return res.send(response(baseResponse.SUCCESS, userListResult));
-    } else {
-        // 유저 검색 조회
-        const userListByEmail = await userProvider.retrieveUserList(email);
-        return res.send(response(baseResponse.SUCCESS, userListByEmail));
-    }
+        return res.send(response(baseResponse.SUCCESS, await userProvider.retrieveUserList()));
+
+    // 유저 검색 조회
+    return res.send(response(baseResponse.SUCCESS, await userProvider.retrieveUserList(email)));
 };
 
 /**
  * API No. 3
  * API Name : 특정 유저 조회 API
- * [GET] /app/users/{userId}
+ * [GET] /app/users/:userId
  */
-exports.getUserById = async function (req, res) {
-
+exports.getUserById = async (req, res) => {
     /**
      * Path Variable: userId
      */
@@ -88,27 +72,25 @@ exports.getUserById = async function (req, res) {
 
     if (!userId) return res.send(errResponse(baseResponse.USER_USERID_EMPTY));
 
-    const userByUserId = await userProvider.retrieveUser(userId);
-    return res.send(response(baseResponse.SUCCESS, userByUserId));
+    return res.send(response(baseResponse.SUCCESS, await userProvider.retrieveUser(userId)));
 };
 
 
-// TODO: After 로그인 인증 방법 (JWT)
 /**
  * API No. 4
  * API Name : 로그인 API
  * [POST] /app/login
  * body : email, passsword
  */
-exports.login = async function (req, res) {
+exports.login = async (req, res) => {
 
     const {email, password} = req.body;
 
     // TODO: email, password 형식적 Validation
-
-    const signInResponse = await userService.postSignIn(email, password);
-
-    return res.send(signInResponse);
+    if(!email) return res.send(response(baseResponse.SIGNIN_EMAIL_EMPTY))
+    if(!regex.EMAIL_REG.test(email)) return res.status(400).send(response(baseResponse.SIGNIN_EMAIL_ERROR_TYPE));
+    if(!password) return res.status(400).send(response(baseResponse.SIGNIN_PASSWORD_EMPTY));
+    return res.status(200).send(await userService.postSignIn(email, password));
 };
 
 
@@ -121,21 +103,21 @@ exports.login = async function (req, res) {
  */
 exports.patchUsers = async function (req, res) {
 
-    // jwt - userId, path variable :userId
+
 
     const userIdFromJWT = req.verifiedToken.userId
 
     const userId = req.params.userId;
     const nickname = req.body.nickname;
 
-    if (userIdFromJWT != userId) {
-        res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
-    } else {
-        if (!nickname) return res.send(errResponse(baseResponse.USER_NICKNAME_EMPTY));
+    if (userIdFromJWT != userId) return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
 
-        const editUserInfo = await userService.editUser(userId, nickname)
-        return res.send(editUserInfo);
-    }
+
+    if (!nickname) return res.send(errResponse(baseResponse.USER_NICKNAME_EMPTY));
+
+    const editUserInfo = await userService.editUser(userId, nickname)
+    return res.send(editUserInfo);
+
 };
 
 
@@ -147,7 +129,7 @@ exports.patchUsers = async function (req, res) {
 /** JWT 토큰 검증 API
  * [GET] /app/auto-login
  */
-exports.check = async function (req, res) {
+exports.check = async (req, res) => {
     const userIdResult = req.verifiedToken.userId;
     console.log(userIdResult);
     return res.send(response(baseResponse.TOKEN_VERIFICATION_SUCCESS));
