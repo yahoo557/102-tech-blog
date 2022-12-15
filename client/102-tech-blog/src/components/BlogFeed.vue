@@ -1,13 +1,16 @@
 <template>
-  <h1>{{ category }}</h1>
-  <hr/>
+  <h2>feed</h2>
 </template>
-<style>
 
-</style>
 <script setup lang="ts">
 defineProps<{
-  feed: object;
+  feed: object[];
   category: String;
 }>();
+import axios from 'axios';
+axios({url:'http://localhost:3000/app/board', method:'GET', withCredentials:true,}).then(res => {
+  console.log(res.data);
+}).catch((err)=>{
+  console.log("err : ", err);
+});
 </script>

@@ -1,10 +1,8 @@
 <template>
-  <main class="blog" :class="{ 'blog--reading': this.post }">
     <BlogNav/>
     <BlogFeed/>
     <BlogPost/>
     <BlogFooter/>
-  </main>
 </template>
 
 <script lang="ts">
@@ -15,4 +13,5 @@ import BlogFooter from "@/components/BlogFooter.vue";
 export default {
   components: {BlogFooter, BlogPost, BlogFeed, BlogNav}
 }
+
 </script>
