@@ -1,9 +1,2 @@
-<template>
-  <feed />
-</template>
-<script setup lang="ts">
-import feed from "../components/BlogFeed.vue";
-
-</script>
-
-
+<template></template>
+<script setup lang="ts"></script>
