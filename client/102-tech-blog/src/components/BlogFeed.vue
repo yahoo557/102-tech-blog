@@ -11,17 +11,6 @@ defineProps<{
   author: string;
   summary: string;
   date: Date;
+  id : number;
 }>();
-import axios from "axios";
-axios({
-  url: "http://localhost:3000/app/board",
-  method: "GET",
-  withCredentials: true,
-})
-  .then((res) => {
-    console.log(res.data);
-  })
-  .catch((err) => {
-    console.log("err : ", err);
-  });
 </script>
