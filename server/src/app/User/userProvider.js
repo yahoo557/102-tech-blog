@@ -7,7 +7,7 @@ exports.dbTest = async ()=>{
   const connection = await pool.connect();
   const testResult = await userDao.dbTest(connection);
   connection.release();
-  return testResult; 
+  return testResult;
 
 };
 
@@ -46,8 +46,8 @@ exports.emailCheck = async (email) => {
 
 exports.passwordCheck = async (selectUserPasswordParams) => {
   const connection = await pool.connect();
-  const passwordCheckResult = await userDao.selectUserPassword(connection, selectUserPasswordParams);
-  return passwordCheckResult[0];
+  return await userDao.selectUserPassword(connection, selectUserPasswordParams);
+
 };
 
 exports.accountCheck = async function (email) {

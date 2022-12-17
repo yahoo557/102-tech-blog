@@ -85,11 +85,12 @@ exports.getUserById = async (req, res) => {
 exports.login = async (req, res) => {
 
     const {email, password} = req.body;
-
     // TODO: email, password 형식적 Validation
     if(!email) return res.send(response(baseResponse.SIGNIN_EMAIL_EMPTY))
     if(!regex.EMAIL_REG.test(email)) return res.status(400).send(response(baseResponse.SIGNIN_EMAIL_ERROR_TYPE));
+
     if(!password) return res.status(400).send(response(baseResponse.SIGNIN_PASSWORD_EMPTY));
+
     return res.status(200).send(await userService.postSignIn(email, password));
 };
 
