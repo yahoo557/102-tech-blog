@@ -102,9 +102,7 @@ exports.login = async (req, res) => {
  * path variable : userId
  * body : nickname
  */
-exports.patchUsers = async function (req, res) {
-
-
+exports.patchUsers = async (req, res) => {
 
     const userIdFromJWT = req.verifiedToken.userId
 
@@ -121,9 +119,19 @@ exports.patchUsers = async function (req, res) {
 
 };
 
+/**
+ * API No. 6
+ * API Name : 회원 탈퇴 API + JWT + Validation
+ * [DELETE] /app/users/
+ * path variable :
+ *
+ */
 
+exports.deleteUsers = async (req, res) => {
 
-
+    const userIdFromJWT = req.verifiedToken.userId
+    return res.send( await userService.deleteUser((userIdFromJWT)))
+}
 
 
 
