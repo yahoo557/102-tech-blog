@@ -7,20 +7,21 @@ const baseResponse = require("./baseResponseStatus");
 const jwtMiddleware = (req, res, next) => {
     // read the token from header or url
     const token = req.headers['x-access-token'] || req.query.token;
+
     // token does not exist
     if(!token) {
         return res.send(errResponse(baseResponse.TOKEN_EMPTY))
     }
 
     // create a promise that decodes the token
-    const p = new Promise(
-        (resolve, reject) => {
+    const p = new Promise( (resolve, reject) => {
             jwt.verify(token, secret_config.jwtsecret , (err, verifiedToken) => {
                 if(err) reject(err);
                 resolve(verifiedToken)
             })
         }
     );
+    console.log(p)
 
     // if it has failed to verify, it will return an error message
     const onError = (error) => {
