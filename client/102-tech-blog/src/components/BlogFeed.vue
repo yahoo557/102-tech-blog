@@ -3,9 +3,9 @@
     <ul class="wrap">
       <li class="item">
         <a  target="_blank">
-          <span class="tit">제목: {{ title }}</span>
-<!--          <span class="aut">작성자: {{user_id}}</span>-->
-<!--          <span class="aut">작성일: {{date}}</span>-->
+          <span class="title">제목: {{ title }}</span>
+<!--          <span class="user_id">작성자: {{user_id}}</span>-->
+<!--          <span class="create_date">작성일: {{date}}</span>-->
         </a>
       </li>
     </ul>
