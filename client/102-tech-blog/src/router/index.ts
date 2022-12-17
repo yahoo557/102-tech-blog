@@ -16,7 +16,7 @@ const router = createRouter({
     {
       path: "/feed",
       name: "feed",
-      component: () => import("../views/PostView.vue"),
+      component: () => import("../views/FeedView.vue"),
     },
   ],
 });

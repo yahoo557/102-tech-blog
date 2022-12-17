@@ -5,7 +5,7 @@ const dotenv = require('dotenv')
 var cors = require('cors');
 module.exports = function () {
     const app = express();
-    
+
     app.use(compression());
 
     app.use(express.json());
@@ -14,7 +14,7 @@ module.exports = function () {
 
     app.use(methodOverride());
 
-    app.use(cors());
+    app.use(cors({ origin:'http://127.0.0.1:5173' }));
     const { swaggerUi, specs } = require("./swagger")
 
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
@@ -28,7 +28,7 @@ module.exports = function () {
     // require('../src/app/Reply/replyRoute')(app);
     // require('../src/app/Random/randomRoute')
     require('../src/app/Random/randomRoute')(app);
-    
+
 
     return app;
 };
