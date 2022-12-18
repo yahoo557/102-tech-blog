@@ -1,21 +1,13 @@
 <template>
   <div>
-    <ul class="wrap">
-      <li class="item">
-        <a  target="_blank">
-          <span class="title">제목: {{ title }}</span>
-<!--          <span class="user_id">작성자: {{user_id}}</span>-->
-<!--          <span class="create_date">작성일: {{date}}</span>-->
-        </a>
-      </li>
-    </ul>
+    <span class="title">제목: {{ title }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
 defineProps<{
 
-  title: { type: string,  required: true};
+  title: string;
   // user_id: { type: string,  required: true};
   // date: { type: string,  required: true};
   // summary: { type: string,  required: true};

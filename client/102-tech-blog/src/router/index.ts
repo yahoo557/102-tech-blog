@@ -9,13 +9,8 @@ const router = createRouter({
       component: () => import("../views/Blog.vue"),
     },
     {
-      path: "/read/:id",
-      name: "post",
-      component: () => import("../views/PostView.vue"),
-    },
-    {
       path: "/feed",
-      name: "feed",
+      name: "Feed",
       component: () => import("../views/FeedView.vue"),
     },
   ],
