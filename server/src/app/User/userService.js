@@ -51,8 +51,8 @@ exports.postSignIn = async function (email, password) {
         // 비밀번호 확인
         const hashedPassword = crypto.createHash("sha512").update(password).digest("hex");
 
-        const selectUserPasswordParams = [selectEmail, hashedPassword];
-        const passwordRows = await userProvider.passwordCheck(selectUserPasswordParams);
+        const selectUserPasswordParams = [];
+        const passwordRows = await userProvider.passwordCheck(selectEmail, hashedPassword);
 
         if (passwordRows.rows[0].password !== hashedPassword) return errResponse(baseResponse.SIGNIN_PASSWORD_WRONG);
 
@@ -74,14 +74,12 @@ exports.postSignIn = async function (email, password) {
     }
 };
 
-exports.editUser = async function (id, nickname) {
+exports.editUser = async (id, nickname) => {
     try {
-        console.log(id)
-        const connection = await pool.getConnection(async (conn) => conn);
+        const connection = await pool.connect();
         const editUserResult = await userDao.updateUserInfo(connection, id, nickname)
-        connection.release();
 
-        return response(baseResponse.SUCCESS);
+        return response(baseResponse.SUCCESS, {});
 
     } catch (err) {
         logger.error(`App - editUser Service error\n: ${err.message}`);
@@ -91,9 +89,14 @@ exports.editUser = async function (id, nickname) {
 
 exports.deleteUser = async (id) => {
     try{
-        const connection = await pool.getConnection(async(conn) => conn);
+        const connection = await pool.connect();
+        const deleteUserResult = await userDao.deleteUser(connection,id);
+
+        //삭제 되었으니 로그아웃 되어야함
+        return response(baseResponse.SUCCESS, {});
 
     }catch (err){
-
+        logger.error(`App - deleteUser Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
     }
 };

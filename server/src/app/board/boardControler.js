@@ -14,12 +14,13 @@ const { response, errResponse } = require("../../../config/response");
  */
 exports.writePost = async (req,res) => {
     const {title, body} = req.body;
+    const userIdFromJWT = req.verifiedToken.userId
     //빈값 체크
     if(!body) return res.status(400).send(response(baseResponse.BOARD_BODY_EMPTY));
 
     if(!title) return res.status(400).send(response(baseResponse.BOARD_TITLE_EMPTY));
 
-    return res.send(response(baseResponse.SUCCESS, await boardService.createPost(title,body)));
+    return res.send(response(baseResponse.SUCCESS, await boardService.createPost(userIdFromJWT, title,body)));
 }
 
 /**
@@ -87,10 +88,11 @@ exports.editPost = async (req, res) =>{
  * [DELETE] /app/board/{id}
  */
 exports.deletePost = async (req, res)=>{
+    const userIdFromJWT = req.verifiedToken.userId
 
     if(!regex.NUMBER_ID_REG.test(req.params.id)) return res.status(400).send(response(baseResponse.BOARD_POST_ID_INVALID));
 
-    return res.send(response(baseResponse.SUCCESS, await boardService.deletePost(req.params.id)));
+    return res.send(response(baseResponse.SUCCESS, await boardService.deletePost(userIdFromJWT,req.params.id)));
 };
 
 /**

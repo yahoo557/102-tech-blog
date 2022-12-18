@@ -44,9 +44,9 @@ exports.emailCheck = async (email) => {
   return await userDao.selectUserEmail(connection, email);
 };
 
-exports.passwordCheck = async (selectUserPasswordParams) => {
+exports.passwordCheck = async (selectEmail, hashedPassword) => {
   const connection = await pool.connect();
-  return await userDao.selectUserPassword(connection, selectUserPasswordParams);
+  return await userDao.selectUserPassword(connection, selectEmail, hashedPassword);
 
 };
 

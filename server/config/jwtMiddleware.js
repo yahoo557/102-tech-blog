@@ -21,7 +21,6 @@ const jwtMiddleware = (req, res, next) => {
             })
         }
     );
-    console.log(p)
 
     // if it has failed to verify, it will return an error message
     const onError = (error) => {
@@ -32,7 +31,11 @@ const jwtMiddleware = (req, res, next) => {
         //비밀 번호 바뀌었을 때 검증 부분 추가 할 곳
         req.verifiedToken = verifiedToken;
         next();
-    }).catch(onError)
+    }).catch((onError )=>{
+        console.log(onError);
+    })
+
+
 };
 
 module.exports = jwtMiddleware;

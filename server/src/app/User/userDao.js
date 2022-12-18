@@ -23,9 +23,9 @@ const insertUserInfo = async (connection, insertUserInfoParams) => {
 }
 
 // 패스워드 체크
-const selectUserPassword= async (connection, selectUserPasswordParams) => {
+const selectUserPassword= async (connection, selectEmail, hashedPassword) => {
   const selectUserPasswordQuery = `SELECT email, nickname, password FROM users WHERE email = $1 AND password = $2 AND status = 'ONLINE';`;
-  return await connection.query(selectUserPasswordQuery, selectUserPasswordParams);
+  return await connection.query(selectUserPasswordQuery, [selectEmail, hashedPassword]);
 }
 
 // 유저 계정 상태 체크 (jwt 생성 위해 id 값도 가져온다.)
@@ -35,10 +35,14 @@ const selectUserAccount = async (connection, email) => {
 }
 
 const updateUserInfo = async (connection, id, nickname) => {
-  const updateUserQuery = `UPDATE user SET nickname = $1 WHERE id = $2;`;
+  const updateUserQuery = `UPDATE users SET nickname = $1 WHERE id = $2;`;
   return await connection.query(updateUserQuery, [nickname, id]);
 }
 
+const deleteUser = async (connection, id) =>{
+  const deleteUserQuery = `UPDATE users SET status = 'OFFLINE' WHERE id = $1;`;
+  return await connection.query(deleteUserQuery,[id]);
+}
 
 module.exports = {
   selectUser,
@@ -48,4 +52,5 @@ module.exports = {
   selectUserPassword,
   selectUserAccount,
   updateUserInfo,
+  deleteUser,
 };

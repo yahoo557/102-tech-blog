@@ -4,7 +4,29 @@ module.exports = function(app){
     const jwtMiddleware = require('../../../config/jwtMiddleware');
 
     // 1. 유저 생성 (회원가입) API
-
+    /**
+     * @swagger
+     * paths:
+     *  /app/users:
+     *    post:
+     *      summary: "유저 생성 (회원가입) API"
+     *      description: ""
+     *      tags: [Users]
+     *      responses:
+     *        "200":
+     *          description: 회원가입성공
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                    ok:
+     *                      type: boolean
+     *                    users:
+     *                      type: object
+     *                      example:
+     *
+     */
     app.post('/app/users', user.postUsers);
 
     // 2. 유저 조회 API (+ 검색)
@@ -21,7 +43,7 @@ module.exports = function(app){
     app.patch('/app/users/:userId', jwtMiddleware, user.patchUsers);
 
     // 6. 회원 탈퇴
-    app.get('/app/users/user-delete', jwtMiddleware, user.check);
+    app.delete('/app/users/', jwtMiddleware, user.deleteUsers);
     // TODO: 자동로그인 API (JWT 검증 및 Payload 내뱉기)
 // JWT 검증 API
     app.get('/app/auto-login', jwtMiddleware, user.check);
