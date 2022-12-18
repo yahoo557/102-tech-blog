@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f0eedbf2-346c-4c10-943a-04212cbc8b24" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../.env" beforeDir="false" afterPath="$PROJECT_DIR$/../../.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../config/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../config/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board/boardControler.js" beforeDir="false" afterPath="$PROJECT_DIR$/board/boardControler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board/boardProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/board/boardProvider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board/boardRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/board/boardRoute.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="2Hd1nu04kImbbIKPQvXOjft8aLa" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/seungbaek/Desktop/code/UMC/template/src/app"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f0eedbf2-346c-4c10-943a-04212cbc8b24" name="Changes" comment="" />
+      <created>1668600318025</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1668600318025</updated>
+      <workItem from="1668600321403" duration="608000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
