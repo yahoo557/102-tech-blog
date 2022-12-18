@@ -14,4 +14,4 @@
 
 **Infra:** EC2
 
-**Util:** Jest for test, SwaggerUI for apiDocs
+**Util:** Jest for test, SwaggerUI for api Docs
