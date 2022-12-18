@@ -7,7 +7,7 @@ const baseResponse = require("./baseResponseStatus");
 const jwtMiddleware = (req, res, next) => {
     // read the token from header or url
     const token = req.headers['x-access-token'] || req.query.token;
-    console.log('jwtmiddleware 단계 : ', token);
+
     // token does not exist
     if(!token) {
         return res.send(errResponse(baseResponse.TOKEN_EMPTY))
@@ -21,7 +21,6 @@ const jwtMiddleware = (req, res, next) => {
             })
         }
     );
-    console.log('jwtmiddleware 단계 : ', p);
 
     // if it has failed to verify, it will return an error message
     const onError = (error) => {

@@ -2,13 +2,13 @@ const {logger} = require("../../../config/winston");
 const {pool} = require("../../../config/database");
 const baseResponse = require("../../../config/baseResponseStatus")
 const boardDao = require("./boardDao")
-const {response} = require("../../../config/response");
+const {response, errResponse} = require("../../../config/response");
 
-exports.createPost = async (title, body) =>{
+exports.createPost = async (userIdFromJWT, title, body) =>{
     const connection = await pool.connect();
     try{
         await connection.query("BEGIN")
-        const createPostResult = boardDao.insertPost(connection, title, body);
+        const createPostResult = boardDao.insertPost(connection, userIdFromJWT, title, body);
         await connection.query("COMMIT");
         await connection.release();
         return createPostResult;
@@ -22,8 +22,12 @@ exports.createPost = async (title, body) =>{
 
 }
 
-exports.deletePost = async(id) =>{
+exports.deletePost = async(userIdFromJWT, id) =>{
     const connection = await pool.connect();
+    // userIdFromJWT와 post의 userId가 일치하는지 확인
+    console.log(await boardDao.checkAuthor(connection, userIdFromJWT, id))
+    // if(boardDao.checkAuthor(connection, userIdFromJWT, id).rows.length<=0) return response(baseResponse.BOARD_USER_ID_DIFFERENT)
+
     try{
         await connection.query("BEGIN")
         const deletePostResult = boardDao.deletePost(connection,id);

@@ -29,10 +29,8 @@ exports.postUsers = async (req, res) => {
     // 빈 값 체크
     if (!email) return res.status(400).send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
 
-
     // 길이 체크
     if (email.length > 30) return res.status(400).send(response(baseResponse.SIGNUP_EMAIL_LENGTH));
-
 
     // 형식 체크 (by 정규표현식)
     if (!regex.EMAIL_REG.test(email)) return res.status(400).send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));

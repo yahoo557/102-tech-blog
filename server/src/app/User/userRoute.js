@@ -4,7 +4,29 @@ module.exports = function(app){
     const jwtMiddleware = require('../../../config/jwtMiddleware');
 
     // 1. 유저 생성 (회원가입) API
-
+    /**
+     * @swagger
+     * paths:
+     *  /app/users:
+     *    post:
+     *      summary: "유저 생성 (회원가입) API"
+     *      description: ""
+     *      tags: [Users]
+     *      responses:
+     *        "200":
+     *          description: 회원가입성공
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                    ok:
+     *                      type: boolean
+     *                    users:
+     *                      type: object
+     *                      example:
+     *
+     */
     app.post('/app/users', user.postUsers);
 
     // 2. 유저 조회 API (+ 검색)

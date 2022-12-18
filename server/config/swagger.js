@@ -8,7 +8,7 @@ const options = {
             version: "1.0.0",
             title: "백이의 테크 블로그 API",
             description:
-                "Swaager swagger-jsdoc 방식 RestFul API 클라이언트 UI",
+                "Swaager swagger-jsdoc 방식 RestFul API Document",
         },
         servers: [
             {
