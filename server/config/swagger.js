@@ -1,6 +1,7 @@
 const swaggerUi = require("swagger-ui-express")
 const swaggerJsdoc = require("swagger-jsdoc")
-
+const path = require("path")
+const basePath = path.join(__dirname, '../src/app/')
 const options = {
     swaggerDefinition: {
         openapi: "3.0.0",
@@ -16,10 +17,11 @@ const options = {
             },
         ],
     },
-    apis: ["/Users/seungbaek/Desktop/code/UMC/template/src/app/User/*.js",
-        "/Users/seungbaek/Desktop/code/UMC/template/src/app/Board/*.js",
-        "/Users/seungbaek/Desktop/code/UMC/template/src/app/Reply/*.js",
-        "/Users/seungbaek/Desktop/code/UMC/template/src/app/Random/*.js"]
+
+    apis: [`${basePath}/User/*.js`,
+        `${basePath}/Reply/*.js`,
+        `${basePath}/Board/*.js`
+        ]
 }
 const specs = swaggerJsdoc(options)
 
