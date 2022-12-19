@@ -38,7 +38,7 @@ exports.createUser = async (email, password, nickname) => {
 };
 
 
-exports.postSignIn = async function (email, password) {
+exports.postSignIn = async (email, password) => {
     try {
         // 이메일 여부 확인
         const emailRows = await userProvider.emailCheck(email);
