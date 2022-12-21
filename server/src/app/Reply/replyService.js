@@ -5,14 +5,20 @@ const {pool} = require("../../../config/database");
 
 const replyProvider = require("./replyProvider");
 const replyDao = require("./replyDao");
+const boardDao = require("../board/boardDao");
 
-exports.createReply  = async (post_id, reply_id , body)=>{
+exports.createReply  = async (body, userIp , postId)=>{
+    const connection = await pool.connect();
     try{
-        const connection = await pool.getConnection(async (conn) => conn);
+        await connection.query("BEGIN")
+        const createPostResult = replyDao.insertReply(connection, body , userIp, postId);
+        await connection.query("COMMIT");
+        await connection.release();
+        return createPostResult;
     }catch(e){
 
     }
-    
+
 }
 
 
