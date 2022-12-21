@@ -11,9 +11,9 @@ const selectReplyPost  = async (connection, poatId) =>{
 }
 
 // 댓글 생성
-const insertReply = async (connection, body, userId, reply_id) =>{
-    const insertReplyQuery = `INSERT body, user_id, id FROM reply VALUSE($1, $2, $3) returning *;`;
-    return await connection.query(insertReplyQuery, [body, userId]);;
+const insertReply = async (connection, body, userIP, postId) =>{
+    const insertReplyQuery = 'INSERT INTO reply ("body", "user_ip", "post_id" ) VALUES ($1, $2, $3) returning *;'
+    return await connection.query(insertReplyQuery, [body, userIP, postId]);
 }
 
 // 댓글 수정

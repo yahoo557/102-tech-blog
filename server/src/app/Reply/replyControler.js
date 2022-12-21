@@ -29,7 +29,7 @@ exports.writeReply = async (req,res) => {
     if(!body||!postId) return res.send(response(baseResponse.REPLY_POST_ID_EMPTY))
     if(!nickname) nickname = "익명의 댓글 작성자";
     //댓글 작성
-    const writeResponse =  await replyService.createReply(postId, body, nickname, userIp);
+    const writeResponse =  await replyService.createReply(postId, body, userIp, postId);
     return res.send(writeResponse)
 }
 
