@@ -13,8 +13,8 @@ module.exports = (app) =>{
     app.post('/app.reply/test', reply.replyTest);
 
     // 1. 댓글생성
-    app.post('/app/reply', );
-    
+    app.post('/app/reply', reply.writeReply() );
+
     // 2. 댓글 리스트 가져오기 (+ 특정 유저가 작성한 댓글 리스트)
     app.get('/app/reply', reply.getReplyList());
 
@@ -23,6 +23,6 @@ module.exports = (app) =>{
 
     // 4. 댓글 삭제
     app.delete('/app/reply/:id', reply.deleteReply());
-    
+
 
 }

@@ -40,16 +40,14 @@ exports.writeReply = async (req,res) => {
  * [GET] /app/reply/
  */
 exports.getReplyList = async (req, res) =>{
-    const {userId, postId} = req.query
+    const {postId} = req.query
 
     //빈값 검출
     if(!userId && !postId) return res.send(baseResponse.REPLY_POST_ID_EMPTY);
 
     //특정 게시글에 작성된 모든 댓글 가져오기
-    if(postId) return res.send(await replyProvider.getReplyListPost(postId));
+    return res.send(await replyProvider.getReplyListPost(postId));
 
-    //특정 유저가
-    return res.send(await replyProvider.getReplyListUser(userId));
 }
 
 /**
