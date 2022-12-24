@@ -11,9 +11,10 @@ const selectReplyPost  = async (connection, poatId) =>{
 }
 
 // 댓글 생성
-const insertReply = async (connection, body, userIP, postId) =>{
-    const insertReplyQuery = 'INSERT INTO reply ("body", "user_ip", "post_id" ) VALUES ($1, $2, $3) returning *;'
-    return await connection.query(insertReplyQuery, [body, userIP, postId]);
+const insertReply = async (connection, createReplyParams) =>{
+
+    const insertReplyQuery = 'INSERT INTO reply ("post_id", "body", "user_ip", "password" , "nickname") VALUES ($1, $2, $3, $4, $5) returning *;'
+    return await connection.query(insertReplyQuery, createReplyParams);
 }
 
 // 댓글 수정

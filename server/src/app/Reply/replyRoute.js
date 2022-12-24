@@ -15,7 +15,7 @@ module.exports = (app) =>{
     // 1. 댓글생성
     app.post('/app/reply', reply.writeReply() );
 
-    // 2. 댓글 리스트 가져오기 (+ 특정 유저가 작성한 댓글 리스트)
+    // 2. 댓글 리스트 가져오기
     app.get('/app/reply', reply.getReplyList());
 
     // 3. 댓글 수정
