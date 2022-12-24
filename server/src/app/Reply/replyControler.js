@@ -23,13 +23,25 @@ exports.replyTest = async (req,res)=>{
  * body : {title : , body}
  */
 exports.writeReply = async (req,res) => {
-    let {postId, nickname,  body} = req.body;
+    let {postId, nickname, body, password} = req.body;
     const userIp = req.socket.remoteAddress
     //빈값 검증
     if(!body||!postId) return res.send(response(baseResponse.REPLY_POST_ID_EMPTY))
+    if(!password) return res.send(response(baseResponse.REPLY_PASSWORD_EMPTY))
     if(!nickname) nickname = "익명의 댓글 작성자";
+
+    // 비밀번호, 닉네임, Regexp 추가
+
+
+
+
+    // 비밀번호 암호화
+
+
+
     //댓글 작성
-    const writeResponse =  await replyService.createReply(postId, body, userIp, postId);
+    const createReplyParams = [postId, body, userIp, password, nickname];
+    const writeResponse =  await replyService.createReply(createReplyParams);
     return res.send(writeResponse)
 }
 
@@ -67,7 +79,7 @@ exports.editReply = async (req, res) =>{
  * API Name : 댓글 삭제
  * [DELETE] /app/reply/:id
  */
-exports.deleteReply = async (req, res)=>{
+exports.deleteReply = async (req, res) => {
     const replyId = req.params.id
     const deleteResponse = await replyService.deleteReply(replyId);
     return res.send(deleteResponse)
