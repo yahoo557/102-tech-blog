@@ -2,7 +2,7 @@ const replyProvider = require("./replyProvider");
 const replyService = require("./replyService");
 const baseResponse = require("../../../config/baseResponseStatus");
 const { response, errResponse} = require("../../../config/response");
-
+const regex = require("../../../config/regex")
 /**
  * API No. 0
  * API Name : IP주소 테스트
@@ -31,7 +31,7 @@ exports.writeReply = async (req,res) => {
     if(!nickname) nickname = "익명의 댓글 작성자";
 
     // 비밀번호, 닉네임, Regexp 추가
-
+    if(!regex.REPLY_PASSWORD_REG.test(password)) return res.send(response(baseResponse.REPLY_PASSWORD_INVALID))
 
 
 

@@ -38,8 +38,7 @@ module.exports = {
     BOARD_BODY_EMPTY : {"isSuccess": false, "code": 2001, "message":"본문을 입력해주세요"},
     BOARD_USER_ID_DIFFERENT : {"isSuccess": false, "code": 2001, "message":"작성자 권한이 없습니다"},
 
-    REPLY_POST_ID_EMPTY: {"isSuccess": false, "code": 2001, "message":"postId를 입력해주세요"},
-    REPLY_PASSWORD_EMPTY:{"isSuccess": false, "code": 2001, "message":"password를 입력해주세요"},
+
 
     // Response error
     SIGNUP_REDUNDANT_EMAIL : { "isSuccess": false, "code": 3001, "message":"중복된 이메일입니다." },
