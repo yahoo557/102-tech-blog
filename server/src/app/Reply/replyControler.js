@@ -1,6 +1,7 @@
 const replyProvider = require("./replyProvider");
 const replyService = require("./replyService");
-const baseResponse = require("../../../config/baseResponseStatus");
+// const baseResponse = require("../../../config/baseResponseStatus");
+const baseResponse = require("./replyResponseStatus");
 const { response, errResponse} = require("../../../config/response");
 const regex = require("../../../config/regex")
 /**
@@ -26,13 +27,15 @@ exports.writeReply = async (req,res) => {
     let {postId, nickname, body, password} = req.body;
     const userIp = req.socket.remoteAddress
     //빈값 검증
-    if(!body||!postId) return res.send(response(baseResponse.REPLY_POST_ID_EMPTY))
-    if(!password) return res.send(response(baseResponse.REPLY_PASSWORD_EMPTY))
-    if(!nickname) nickname = "익명의 댓글 작성자";
+    if(!body||!postId) return res.send(errResponse(baseResponse.REPLY_POST_ID_EMPTY))
+    if(!password) return res.send(errResponse(baseResponse.REPLY_PASSWORD_EMPTY))
+
+    // 닉네임 미입력시 기본닉네임으로 "익명의 댓글작성자 (192.168)"
+    if(!nickname) nickname = `익명의 댓글작성자 (${userIp.split('.')[0]}.${userIp.split('.')[1]})`;
 
     // 비밀번호, 닉네임, Regexp 추가
-    if(!regex.REPLY_PASSWORD_REG.test(password)) return res.send(response(baseResponse.REPLY_PASSWORD_INVALID))
-
+    if(!regex.REPLY_PASSWORD_REG.test(password)) return res.send(errResponse(baseResponse.REPLY_PASSWORD_INVALID))
+    // if(!regex.)
 
 
     // 비밀번호 암호화
@@ -40,8 +43,8 @@ exports.writeReply = async (req,res) => {
 
 
     //댓글 작성
-    const createReplyParams = [postId, body, userIp, password, nickname];
-    const writeResponse =  await replyService.createReply(createReplyParams);
+
+    const writeResponse =  await replyService.createReply(postId, body, userIp, password, nickname);
     return res.send(writeResponse)
 }
 
@@ -55,7 +58,7 @@ exports.getReplyList = async (req, res) =>{
     const {postId} = req.query
 
     //빈값 검출
-    if(!userId && !postId) return res.send(baseResponse.REPLY_POST_ID_EMPTY);
+    if(!postId) return res.send(baseResponse.REPLY_POST_ID_EMPTY);
 
     //특정 게시글에 작성된 모든 댓글 가져오기
     return res.send(await replyProvider.getReplyListPost(postId));
