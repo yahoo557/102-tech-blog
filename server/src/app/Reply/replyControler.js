@@ -4,6 +4,7 @@ const replyService = require("./replyService");
 const baseResponse = require("./replyResponseStatus");
 const { response, errResponse} = require("../../../config/response");
 const regex = require("../../../config/regex")
+const crypto = require("crypto");
 /**
  * API No. 0
  * API Name : IP주소 테스트
@@ -35,16 +36,11 @@ exports.writeReply = async (req,res) => {
 
     // 비밀번호, 닉네임, Regexp 추가
     if(!regex.REPLY_PASSWORD_REG.test(password)) return res.send(errResponse(baseResponse.REPLY_PASSWORD_INVALID))
-    // if(!regex.)
-
-
-    // 비밀번호 암호화
-
+    if(nickname.length>10 || nickname.length<1) return res.send(errResponse(baseResponse.REPLY_NICKNAME_LENGTH))
 
 
     //댓글 작성
-
-    const writeResponse =  await replyService.createReply(postId, body, userIp, password, nickname);
+    const writeResponse =  await replyService.createReply(postId, body, userIp, hashedPassword, nickname);
     return res.send(writeResponse)
 }
 
