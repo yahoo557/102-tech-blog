@@ -1,5 +1,6 @@
 // 작성자로 댓글 조회
- const selectReplyUser  = async (connection, userId) =>{
+ const {connections} = require("swagger/project-skeletons/sails/config/connections");
+const selectReplyUser  = async (connection, userId) =>{
     const selectReplyUserQuery = `SELECT * FROM reply WHERE user_id = $1 and status = 'ONLINE';`;
     return await connection.query(selectReplyUserQuery, [userId]);;
 }
@@ -19,7 +20,7 @@ const insertReply = async (connection, createReplyParams) =>{
 
 // 댓글 수정
 const updateReply = async (connection, body, reply_id) =>{
-    const updateReply = `UPDATE reply SET body = %1 WHERE id = $2 returning *;`
+    const updateReply = `UPDATE reply SET body = $1 WHERE id = $2 returning *;`
     return await connection.query(updateReply, [body, reply_id]);
 }
 
@@ -30,10 +31,17 @@ const deleteReply = async(connection, replyId)=>{
     return await connection.query(deleteReplyQuery, [replyId]);
 }
 
+const selectReplyPassword = async(connection, replyId, hashedPassword)=>{
+    const selectReplyPasswordQuery = `SELECT reply_id  FROM reply WHERE reply_id = $1 and password = $2 status = 'ONLINE';`;
+    return await connection.query(selectReplyPasswordQuery, [replyId]);
+
+}
+
 module.exports = {
     selectReplyUser,
     selectReplyPost,
     insertReply,
     updateReply,
-    deleteReply
+    deleteReply,
+    selectReplyPassword
 };
