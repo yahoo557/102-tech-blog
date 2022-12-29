@@ -28,8 +28,10 @@ exports.createReply  = async (postId, body, userIp, password, nickname)=>{
 }
 
 
-exports.editReply  = async ()=>{
+exports.editReply  = async (body, password, replyId)=>{
+    // 비밀번호 검증
 
+    //
 };
 
 exports.deleteReply = async (replyId)=>{

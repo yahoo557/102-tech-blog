@@ -5,6 +5,8 @@ const baseResponse = require("./replyResponseStatus");
 const { response, errResponse} = require("../../../config/response");
 const regex = require("../../../config/regex")
 const crypto = require("crypto");
+const {error} = require("winston");
+const userProvider = require("../User/userProvider");
 /**
  * API No. 0
  * API Name : IP주소 테스트
@@ -54,11 +56,13 @@ exports.getReplyList = async (req, res) =>{
     const {postId} = req.query
 
     //빈값 검출
-    if(!postId) return res.send(baseResponse.REPLY_POST_ID_EMPTY);
+    if(!postId) return res.send(errResponse(baseResponse.REPLY_POST_ID_EMPTY));
+
+    //postId형식 validation
+    if((!regex.NUMBER_ID_REG.test(postId))) return res.send(errResponse(baseResponse.REPLY_POST_ID_EMPTY))
 
     //특정 게시글에 작성된 모든 댓글 가져오기
-    return res.send(await replyProvider.getReplyListPost(postId));
-
+    return res.send(await replyProvider.retrieveReplyListPost(postId));
 }
 
 /**
@@ -67,9 +71,19 @@ exports.getReplyList = async (req, res) =>{
  * [FETCH] /app/reply/:id
  */
 exports.editReply = async (req, res) =>{
-    const {body} = req.body
-    const editResponse = await replyService.editReply(body);
-    return res.send(editResponse)
+    const {body,password} = req.body;
+    const replyId = req.params.id;
+    //빈값 검출
+    if(!body) return res.send(errResponse(baseResponse.REPLY_POST_ID_EMPTY))
+
+    //비밀번호형식 validation
+    if(!regex.REPLY_PASSWORD_REG.test(password)) return res.send(errResponse(baseResponse.REPLY_PASSWORD_INVALID))
+
+    //비밀번호 확인
+    const passwordRows = await replyProvider.passwordCheck(selectEmail, hashedPassword);
+
+
+    return res.send(await replyService.editReply(body,password,replyId))
 }
 
 
