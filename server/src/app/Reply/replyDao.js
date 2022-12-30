@@ -13,8 +13,8 @@ const selectReplyPost  = async (connection, poatId) =>{
 
 // 댓글 생성
 const insertReply = async (connection, createReplyParams) =>{
-
     const insertReplyQuery = 'INSERT INTO reply ("post_id", "body", "user_ip", "password" , "nickname") VALUES ($1, $2, $3, $4, $5) returning *;'
+    console.log(createReplyParams)
     return await connection.query(insertReplyQuery, createReplyParams);
 }
 
@@ -31,10 +31,10 @@ const deleteReply = async(connection, replyId)=>{
     return await connection.query(deleteReplyQuery, [replyId]);
 }
 
+// 댓글 비밀번호 확인
 const selectReplyPassword = async(connection, replyId, hashedPassword)=>{
-    const selectReplyPasswordQuery = `SELECT reply_id  FROM reply WHERE reply_id = $1 and password = $2 status = 'ONLINE';`;
+    const selectReplyPasswordQuery = `SELECT reply_id  FROM reply WHERE reply_id = $1 and password = $2 and status = 'ONLINE';`;
     return await connection.query(selectReplyPasswordQuery, [replyId]);
-
 }
 
 module.exports = {

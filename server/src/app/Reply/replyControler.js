@@ -37,12 +37,11 @@ exports.writeReply = async (req,res) => {
     if(!nickname) nickname = `익명의 댓글작성자 (${userIp.split('.')[0]}.${userIp.split('.')[1]})`;
 
     // 비밀번호, 닉네임, Regexp 추가
-    if(!regex.REPLY_PASSWORD_REG.test(password)) return res.send(errResponse(baseResponse.REPLY_PASSWORD_INVALID))
-    if(nickname.length>10 || nickname.length<1) return res.send(errResponse(baseResponse.REPLY_NICKNAME_LENGTH))
+    if(nickname && !regex.REPLY_PASSWORD_REG.test(password)) return res.send(errResponse(baseResponse.REPLY_PASSWORD_INVALID))
 
 
     //댓글 작성
-    const writeResponse =  await replyService.createReply(postId, body, userIp, hashedPassword, nickname);
+    const writeResponse =  await replyService.createReply(postId, body, userIp, password, nickname);
     return res.send(writeResponse)
 }
 

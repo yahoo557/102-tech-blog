@@ -1,9 +1,3 @@
-/**
- * @swagger
- * tags:
- *   name: Board
- *   description: 게시글 생성 조회 수정 삭제
- */
 module.exports = (app) =>{
     const board = require('./boardControler')
     const jwtMiddleware = require('../../../config/jwtMiddleware');
