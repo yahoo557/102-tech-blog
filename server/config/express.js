@@ -25,7 +25,7 @@ module.exports = function () {
     // TODO: 도메인을 추가할 경우 이곳에 Route를 추가하세요.
     require('../src/app/User/userRoute')(app);
     require('../src/app/board/boardRoute')(app);
-    // require('../src/app/Reply/replyRoute')(app);
+    require('../src/app/Reply/replyRoute')(app);
     // require('../src/app/Random/randomRoute')
     require('../src/app/Random/randomRoute')(app);
 
