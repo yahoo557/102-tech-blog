@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>FeedVue</h1>
     <span class="title">제목: {{ title }}</span>
   </div>
 </template>
@@ -8,12 +9,6 @@
 defineProps<{
 
   title: string;
-  // user_id: { type: string,  required: true};
-  // date: { type: string,  required: true};
-  // summary: { type: string,  required: true};
-  // img: { type: string,  required: false};
-
-  // src: { type: string,  required: false};
 
 }>();
 </script>
