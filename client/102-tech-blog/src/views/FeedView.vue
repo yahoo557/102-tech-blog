@@ -1,17 +1,20 @@
 <template>
-  <h1>Feed View</h1>
-  <Feed :title="test" />
+  <h1> Feed View </h1>
 </template>
 
+
+
 <script setup lang="ts">
-import Feed from "../components/BlogFeed.vue";
+
 import axios from "axios";
-const test  = "test"
-const getData = async () => {
-  let response = await axios.get("http://localhost:3000/app/board");
-  return response.data.rows[0];
-};
 
+const getPostData = async ()  =>{
+  let result = await axios.get("http://localhost:3000/app/board");
+  return result.data.rows
+}
+const data  = getPostData()
 
+// const title = response.data.rows[0].title
 
 </script>
+

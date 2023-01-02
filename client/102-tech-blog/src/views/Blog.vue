@@ -2,4 +2,6 @@
   <h1>Home view</h1>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts">
+
+</script>
