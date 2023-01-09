@@ -19,7 +19,6 @@ export default {
       console.log('failed', data);
     };
     httpGet('/app/board', onSuccess, onFailed);
-    console.log(postData.value);
     return {
       postData,
     };
@@ -30,10 +29,10 @@ export default {
 <template>
   <div class="container pt-5">
     <ul>
-      <li v-for="(post, index) in postData" v-bind:key="post">
+      <li v-for="(post, index) in postData" v-bind:key="index">
         <p>{{ index }}</p>
-        <h1>{{ post.title }}</h1>
-        <BlogFeedCard :postData="post" />
+
+        <BlogFeedCard v-bind="post" />
       </li>
     </ul>
   </div>

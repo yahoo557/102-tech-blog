@@ -3,19 +3,19 @@ interface Post {
   id?: number;
   title?: string;
   body?: string;
-  createdDate?: string;
+  created_at?: string;
   user_id?: number;
-  viewCont?: number;
+  viewCount?: number;
 }
-const postData = defineProps<Post>();
-console.log('in Card', postData.id, postData.title);
+const post = defineProps<Post>();
+
 </script>
 
 <template>
   <div class="card-body">
-    <h4>{{ postData.title }}</h4>
+    <h4>{{ post.title }}</h4>
+    <p class="card-text">{{ post.body }}</p>
     <hr />
-    <p class="card-text">{{ postData.body }}</p>
   </div>
 </template>
 
