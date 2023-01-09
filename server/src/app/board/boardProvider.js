@@ -29,11 +29,21 @@ exports.getPostListByUserTitle = async (title,userId)=>{
 
 exports.getPostList = async () => {
     const connection = await pool.connect();
-    return boardDao.selectPost(connection);
+
+    const result = boardDao.selectPost(connection);
+
+    connection.release();
+
+    return result
 }
 
 
 exports.getPost = async (postId)=>{
     const connection = await pool.connect();
-    return boardDao.selectPostId(connection, postId);
+
+    const result = boardDao.selectPostId(connection, postId);
+
+    connection.release();
+
+    return result
 }
