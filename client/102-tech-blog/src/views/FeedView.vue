@@ -30,9 +30,9 @@ export default {
   <div class="container pt-5">
     <ul>
       <li v-for="(post, index) in postData" v-bind:key="index">
-        <p>{{ index }}</p>
 
         <BlogFeedCard v-bind="post" />
+
       </li>
     </ul>
   </div>

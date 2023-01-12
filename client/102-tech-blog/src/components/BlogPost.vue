@@ -17,11 +17,17 @@ const markdown = marked.parse(post.body);
 </script>
 
 <template>
-    <div id="content" v-html="markdown"> </div>
+  <div id="content" v-html="markdown"></div>
 </template>
 
 <style scoped>
-  #content{
-    margin:20px;
-  }
+#content {
+  margin: 20px;
+}
+
+code{
+  background-color: black;
+  border-radius: 5px;
+  border: solid black 1px;
+}
 </style>
