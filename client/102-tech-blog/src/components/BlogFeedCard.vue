@@ -1,19 +1,24 @@
 <script setup lang="ts">
-interface Post {
-  id?: number;
-  title?: string;
-  body?: string;
-  created_at?: string;
-  user_id?: number;
-  viewCount?: number;
-}
-const post = defineProps<Post>();
+import { Post as PostInterface } from "@/interface/postInterface";
+// interface Props extends PostInterface {};
 
+interface Props {
+  id: number;
+  title: string;
+  body: string;
+  created_at: string;
+  status: string;
+  updated_at: string;
+  user_id: number;
+  view_count: number;
+  like_count: number;
+}
+const post = defineProps<Props>();
 </script>
 
 <template>
   <div class="card-body">
-    <h4>{{ post.title }}</h4>
+    <a :href="post.id"><h4>{{ post.title }}</h4></a>
     <p class="card-text">{{ post.body }}</p>
     <hr />
   </div>
