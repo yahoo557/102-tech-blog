@@ -1,3 +1,4 @@
+
 module.exports = (app) =>{
     const board = require('./boardControler')
     const jwtMiddleware = require('../../../config/jwtMiddleware');
@@ -19,4 +20,3 @@ module.exports = (app) =>{
 
 
 };
-
