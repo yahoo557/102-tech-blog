@@ -1,8 +1,12 @@
 const replyProvider = require("./replyProvider");
 const replyService = require("./replyService");
-const baseResponse = require("../../../config/baseResponseStatus");
+// const baseResponse = require("../../../config/baseResponseStatus");
+const baseResponse = require("./replyResponseStatus");
 const { response, errResponse} = require("../../../config/response");
-
+const regex = require("../../../config/regex")
+const crypto = require("crypto");
+const {error} = require("winston");
+const userProvider = require("../User/userProvider");
 /**
  * API No. 0
  * API Name : IP주소 테스트
@@ -23,13 +27,21 @@ exports.replyTest = async (req,res)=>{
  * body : {title : , body}
  */
 exports.writeReply = async (req,res) => {
-    let {postId, nickname,  body} = req.body;
+    let {postId, nickname, body, password} = req.body;
     const userIp = req.socket.remoteAddress
     //빈값 검증
-    if(!body||!postId) return res.send(response(baseResponse.REPLY_POST_ID_EMPTY))
-    if(!nickname) nickname = "익명의 댓글 작성자";
+    if(!body||!postId) return res.send(errResponse(baseResponse.REPLY_POST_ID_EMPTY))
+    if(!password) return res.send(errResponse(baseResponse.REPLY_PASSWORD_EMPTY))
+
+    // 닉네임 미입력시 기본닉네임으로 "익명의 댓글작성자 (192.168)"
+    if(!nickname) nickname = `익명의 댓글작성자 (${userIp.split('.')[0]}.${userIp.split('.')[1]})`;
+
+    // 비밀번호, 닉네임, Regexp 추가
+    if(nickname && !regex.REPLY_PASSWORD_REG.test(password)) return res.send(errResponse(baseResponse.REPLY_PASSWORD_INVALID))
+
+
     //댓글 작성
-    const writeResponse =  await replyService.createReply(postId, body, nickname, userIp);
+    const writeResponse =  await replyService.createReply(postId, body, userIp, password, nickname);
     return res.send(writeResponse)
 }
 
@@ -40,16 +52,16 @@ exports.writeReply = async (req,res) => {
  * [GET] /app/reply/
  */
 exports.getReplyList = async (req, res) =>{
-    const {userId, postId} = req.query
+    const {postId} = req.query
 
     //빈값 검출
-    if(!userId && !postId) return res.send(baseResponse.REPLY_POST_ID_EMPTY);
+    if(!postId) return res.send(errResponse(baseResponse.REPLY_POST_ID_EMPTY));
+
+    //postId형식 validation
+    if((!regex.NUMBER_ID_REG.test(postId))) return res.send(errResponse(baseResponse.REPLY_POST_ID_EMPTY))
 
     //특정 게시글에 작성된 모든 댓글 가져오기
-    if(postId) return res.send(await replyProvider.getReplyListPost(postId));
-
-    //특정 유저가
-    return res.send(await replyProvider.getReplyListUser(userId));
+    return res.send(await replyProvider.retrieveReplyListPost(postId));
 }
 
 /**
@@ -58,9 +70,19 @@ exports.getReplyList = async (req, res) =>{
  * [FETCH] /app/reply/:id
  */
 exports.editReply = async (req, res) =>{
-    const {body} = req.body
-    const editResponse = await replyService.editReply(body);
-    return res.send(editResponse)
+    const {body,password} = req.body;
+    const replyId = req.params.id;
+    //빈값 검출
+    if(!body) return res.send(errResponse(baseResponse.REPLY_POST_ID_EMPTY))
+
+    //비밀번호형식 validation
+    if(!regex.REPLY_PASSWORD_REG.test(password)) return res.send(errResponse(baseResponse.REPLY_PASSWORD_INVALID))
+
+    //비밀번호 확인
+    const passwordRows = await replyProvider.passwordCheck(selectEmail, hashedPassword);
+
+
+    return res.send(await replyService.editReply(body,password,replyId))
 }
 
 
@@ -69,7 +91,7 @@ exports.editReply = async (req, res) =>{
  * API Name : 댓글 삭제
  * [DELETE] /app/reply/:id
  */
-exports.deleteReply = async (req, res)=>{
+exports.deleteReply = async (req, res) => {
     const replyId = req.params.id
     const deleteResponse = await replyService.deleteReply(replyId);
     return res.send(deleteResponse)

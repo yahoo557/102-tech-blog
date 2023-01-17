@@ -14,23 +14,24 @@ const { response, errResponse } = require("../../../config/response");
  */
 exports.writePost = async (req,res) => {
     const {title, body} = req.body;
+    const userIdFromJWT = req.verifiedToken.userId
     //빈값 체크
     if(!body) return res.status(400).send(response(baseResponse.BOARD_BODY_EMPTY));
 
     if(!title) return res.status(400).send(response(baseResponse.BOARD_TITLE_EMPTY));
 
-    return res.send(response(baseResponse.SUCCESS, await boardService.createPost(title,body)));
+    return res.send(response(baseResponse.SUCCESS, await boardService.createPost(userIdFromJWT, title,body)));
 }
 
 /**
  * API No. 2
  * API Name : 게시글 리스트 가져오기(제목, 작성자로 가져오기, 인기게시글 가져오기)
  * [GET] /app/board
- * 
- */ 
+ *
+ */
 exports.getPostList = async (req, res) =>{
     const {title, userId, category, hot} = req.query
-    if(!regex.NUMBER_ID_REG.test(userId)) return res.status(400).send(response(baseResponse.BOARD_USER_ID_INVALID));
+    // if(!regex.NUMBER_ID_REG.test(userId)) return res.status(400).send(response(baseResponse.BOARD_USER_ID_INVALID));
 
     // 게시글 제목과 작성자 둘다로 검색
     if(title&&userId) return res.status(200).send(response(baseResponse.SUCCESS, await boardProvider.getPostListByUserTitle(title, userId)));
@@ -54,7 +55,7 @@ exports.getPostList = async (req, res) =>{
 /**
  * API No. 3
  * API Name : 특정 게시글 가져오기
- * [GET] /app/board/{id}
+ * [GET] /app/board/
  * TODO : 조회수 올려야함
  */
 exports.getPost = async (req, res) =>{
@@ -87,16 +88,17 @@ exports.editPost = async (req, res) =>{
  * [DELETE] /app/board/{id}
  */
 exports.deletePost = async (req, res)=>{
+    const userIdFromJWT = req.verifiedToken.userId
 
     if(!regex.NUMBER_ID_REG.test(req.params.id)) return res.status(400).send(response(baseResponse.BOARD_POST_ID_INVALID));
 
-    return res.send(response(baseResponse.SUCCESS, await boardService.deletePost(req.params.id)));
+    return res.send(response(baseResponse.SUCCESS, await boardService.deletePost(userIdFromJWT,req.params.id)));
 };
 
 /**
  * API No.6
  * API Name : JWT decode
- * 
+ *
  */
  exports.check = async (req, res) => {
     const userIdResult = req.verifiedToken.userId;

@@ -16,7 +16,7 @@ const selectPostTitleUser = async (connection,title, userId)=> {
     return await connection.query(selectPostTitleUserQuery, [title, userId]);
 }
 
-// 게시글 리스트 전체 조회 
+// 게시글 리스트 전체 조회
 const selectPost = async (connection)=>{
     const selectPostQuery = `SELECT * FROM post WHERE status = 'ONLINE';`
     return await connection.query(selectPostQuery);
@@ -41,11 +41,11 @@ const selectPostId = async (connection, id)=>{
 }
 
 // 게시글 생성
-const insertPost = async (connection, title, body) =>{
+const insertPost = async (connection,userIdFromJWT, title, body) =>{
     const insertPostQuery = 'INSERT INTO post ("title", "body", "user_id" ) VALUES ($1, $2, $3) returning *;'
-    return await connection.query(insertPostQuery, [title, body, 1]);
+    return await connection.query(insertPostQuery, [title, body, userIdFromJWT]);
 }
-    
+
 
 // 게시글 수정
 const updatePost = async (connection, id,title, body) =>{
@@ -59,6 +59,11 @@ const deletePost = async (connection, postId)=>{
     return await connection.query(deletePostQuery, [postId]);
 }
 
+// 게시글 작성자 확인
+const checkAuthor = async (connection, userIdFromJWT, postId) =>{
+    const checkAuthorQuery = `SELECT status FROM post WHERE id = $1 and user_id = $2;`;
+    return await connection.query(checkAuthorQuery, [postId, userIdFromJWT]);
+}
 
 module.exports = {
     selectPostUser,
@@ -70,5 +75,6 @@ module.exports = {
     insertPost,
     updatePost,
     selectPostId,
-    deletePost
+    deletePost,
+    checkAuthor
 };
