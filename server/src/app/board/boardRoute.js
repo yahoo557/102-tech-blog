@@ -18,5 +18,6 @@ module.exports = (app) =>{
     // 5. 게시글 삭제
     app.delete('/app/board/:id',jwtMiddleware, board.deletePost);
 
-
+    // 6. 이미지 업로드
+    app.post('/app/baord/image', jwtMiddleware, board.postImage);
 };

@@ -105,4 +105,12 @@ exports.deletePost = async (req, res)=>{
     console.log(userIdResult);
     return res.send(response(baseResponse.TOKEN_VERIFICATION_SUCCESS, userIdResult));
 };
+/**
+ * API No.7
+ * API Name : Upload Image to s3 bucket
+ *
+ */
+ exports.postImage = async (req,res)=>{
+
+ };
 
