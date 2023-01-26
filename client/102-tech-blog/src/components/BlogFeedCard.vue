@@ -17,9 +17,11 @@ const post = defineProps<Props>();
 </script>
 
 <template>
-  <div class="card-body">
-    <a :href="post.id"><h4>{{ post.title }}</h4></a>
-    <p class="card-text">{{ post.body }}</p>
+  <div class="card h-300  border-2">
+    <div class="card-body">
+      <a :href="post.id"><h4>{{ post.title }}</h4></a>
+      <p class="card-text overflow-hidden">{{ post.body }}</p>
+    </div>
     <hr />
   </div>
 </template>
