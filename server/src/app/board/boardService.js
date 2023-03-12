@@ -4,11 +4,11 @@ const baseResponse = require("../../../config/baseResponseStatus")
 const boardDao = require("./boardDao")
 const {response, errResponse} = require("../../../config/response");
 
-exports.createPost = async (userIdFromJWT, title, body) =>{
+exports.createPost = async (userIdFromJWT, title, body, description) =>{
     const connection = await pool.connect();
     try{
         await connection.query("BEGIN")
-        const createPostResult = boardDao.insertPost(connection, userIdFromJWT, title, body);
+        const createPostResult = boardDao.insertPost(connection, userIdFromJWT, title, body, description);
         await connection.query("COMMIT");
         await connection.release();
         return createPostResult;

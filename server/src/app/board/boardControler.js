@@ -13,14 +13,11 @@ const { response, errResponse } = require("../../../config/response");
  * body : {title : , body}
  */
 exports.writePost = async (req,res) => {
-    const {title, body} = req.body;
+    const {title, body, description} = req.body;
+
     const userIdFromJWT = req.verifiedToken.userId
-    //빈값 체크
-    if(!body) return res.status(400).send(response(baseResponse.BOARD_BODY_EMPTY));
 
-    if(!title) return res.status(400).send(response(baseResponse.BOARD_TITLE_EMPTY));
-
-    return res.send(response(baseResponse.SUCCESS, await boardService.createPost(userIdFromJWT, title,body)));
+    return res.send(response(baseResponse.SUCCESS, await boardService.createPost(userIdFromJWT, title,body, description)));
 }
 
 /**

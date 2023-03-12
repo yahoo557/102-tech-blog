@@ -2,9 +2,9 @@
 module.exports = (app) =>{
     const board = require('./boardControler')
     const jwtMiddleware = require('../../../config/jwtMiddleware');
-
+    const boardMiddleware = require("./board.middleware")
     // 1. 게시글생성
-    app.post('/app/board',jwtMiddleware, board.writePost);
+    app.post('/app/board',jwtMiddleware,boardMiddleware.boardBodyEmpty, boardMiddleware.boardTitleEmpty, board.writePost);
 
     // 2. 게시글 리스트 가져오기 (유저id, 제목으로 검색 + 인기게시글, 카테고리 별 게시글)
     app.get('/app/board/', board.getPostList);
