@@ -28,12 +28,18 @@ export default {
 
 <template>
   <div class="container pt-5">
+  <div class="row row-cols-1 row-cols-sm-3 g-2 m-0">
+    <div class="col" v-for="(post, index) in postData" v-bind:key="index">
+      <BlogFeedCard v-bind="post" />
+    </div>
+
+  </div>
     <ul>
-      <li v-for="(post, index) in postData" v-bind:key="index">
+<!--      <li v-for=>-->
+<!---->
 
-        <BlogFeedCard v-bind="post" />
-
-      </li>
+<!---->
+<!--      </li>-->
     </ul>
   </div>
 </template>

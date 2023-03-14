@@ -41,9 +41,9 @@ const selectPostId = async (connection, id)=>{
 }
 
 // 게시글 생성
-const insertPost = async (connection,userIdFromJWT, title, body) =>{
-    const insertPostQuery = 'INSERT INTO post ("title", "body", "user_id" ) VALUES ($1, $2, $3) returning *;'
-    return await connection.query(insertPostQuery, [title, body, userIdFromJWT]);
+const insertPost = async (connection,userIdFromJWT, title, body, description) =>{
+    const insertPostQuery = 'INSERT INTO post ("title", "body", "user_id", "description" ) VALUES ($1, $2, $3, $4) returning *;'
+    return await connection.query(insertPostQuery, [title, body, userIdFromJWT, description]);
 }
 
 
