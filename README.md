@@ -12,6 +12,6 @@
  
 **DB:** PostgreSQL @14.5
 
-**Infra:** EC2
+**Infra:** EC2, S3, RDS
 
-**Util:** Jest for test, SwaggerUI for api Docs
+**Util:** SwaggerUI for api Docs
