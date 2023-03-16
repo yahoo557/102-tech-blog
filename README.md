@@ -8,7 +8,7 @@
 
 **Client:** Vue.js  @3.2.45
 
-**Server:** Express @4.18.2
+**Server:** Nest.js @9.2.0
  
 **DB:** PostgreSQL @14.5
 
