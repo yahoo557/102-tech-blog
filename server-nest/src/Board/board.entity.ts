@@ -1,27 +1,14 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {EssentialProperty} from "../Database/essential.entity";
 
 @Entity()
-export class Post {
-    @PrimaryGeneratedColumn()
-    id:number
-
+export class Post extends EssentialProperty{
     @Column()
     title : string
 
     @Column()
     body : string
 
-    @Column()
-    user_id:number
-
-    @Column()
-    status: string
-
-    @Column()
-    created_at: string
-
-    @Column()
-    updated_at: string
 
     @Column()
     description: string

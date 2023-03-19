@@ -9,10 +9,11 @@ export class BoardService {
     ) {}
 
     getPostById(boardId:number): Promise <Post> {
-        return this.postRepository.findOneBy({ id:boardId })
+
+        return this.postRepository.findOneBy({ id:boardId})
     }
 
-    async getAllPost():Promise<Post[]> {
+    getAllPost():Promise<Post[]> {
         return this.postRepository.find();
     }
 
