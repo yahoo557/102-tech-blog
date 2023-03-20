@@ -1,6 +1,6 @@
-const express = require('./config/express');
+const express = require('./config/express.ts');
 const {logger} = require('./config/winston');
-const events = require("events");
+
 
 require("dotenv").config();
 

@@ -5,7 +5,6 @@
 <script lang="ts">
 
 export default () => {
-  const
 }
 
 </script>
