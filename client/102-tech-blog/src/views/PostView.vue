@@ -16,12 +16,12 @@ export default {
     const { postData, setState } = useStorePost();
     const route = useRoute();
     const onSuccess = (data: Data) => {
-      setState(data.result.rows);
+      setState(data);
     };
     const onFailed = (data: Data) => {
       console.log('failed', data);
     };
-    httpGet(`/app/board/${route.params.id}`, onSuccess, onFailed);
+    httpGet(`/api/board/${route.params.id}`, onSuccess, onFailed);
     return {
       postData,
     };
@@ -30,12 +30,8 @@ export default {
 </script>
 
 <template>
-  <h1>Post view</h1>
   <hr />
-  <div v-for="(post, index) in postData" v-bind:key="index">
-    <BlogPost v-bind="post" />
-  </div>
-
+    <BlogPost v-bind="postData" />
   <hr />
   <BlogReply />
 </template>
