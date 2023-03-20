@@ -7,16 +7,13 @@ interface Props {
   title: string;
   body: string;
   description: string;
-  created_at: string;
+  createdAt: string;
   status: string;
   date: string;
-  updated_at: string;
-  user_id: number;
-  view_count: number;
-  like_count: number;
 }
 
 const post = defineProps<Props>();
+
 </script>
 
 <template>
@@ -25,7 +22,6 @@ const post = defineProps<Props>();
       <a :href="post.id"><h4>{{ post.title }}</h4></a>
       <p class="card-text overflow-hidden">{{ post.description }}</p>
     </div>
-
     <div class="card-footer">
       <p class="card-text">DATE : {{post.date}}</p>
     </div>
