@@ -1,8 +1,15 @@
+가<script setup lang="ts">
+interface Props {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name:string;
+}
+const tag = defineProps<Props>();
+</script>
 <template>
-  <div class="card h-300  border-2 ">
-    <div class="card-body">
-
-
-    </div>
-  </div>
+  <h4>{{ tag.name }}</h4>
 </template>
+<style scoped>
+
+</style>
