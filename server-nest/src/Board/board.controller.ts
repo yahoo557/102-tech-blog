@@ -12,7 +12,7 @@ export class BoardController {
     @Get("/api/board/:id")
     async readPost(@Param() params): Promise<any> {
         const boardId: number = params.id
-        Logger.log(`BoardIdx = ${boardId} , res = ${await this.boardService.getPostById(boardId)}`)
+        Logger.log(`Request {/api/board/${boardId}, GET}"`, "BoardController")
         return await this.boardService.getPostById(boardId);
     }
 
