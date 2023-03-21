@@ -5,9 +5,10 @@ interface Data {
 }
 
 import { useStorePost } from "@/compositions/useStorePost";
+
 import { httpGet } from "@/modules/http";
 import BlogFeedCard from "@/components/BlogFeedCard.vue";
-뀜import TagView from "@/components/TagList.vue"
+import TagView from "@/views/TagView.vue"
 
 export default {
   components: { BlogFeedCard },
@@ -28,22 +29,12 @@ export default {
 </script>
 
 <template>
-  <div class="container pt-5">
-    <TagView />
-  </div>
+  <TagView />
   <div class="container pt-5">
   <div class="row row-cols-1 row-cols-sm-3 g-2 m-0">
     <div class="col" v-for="(post, index) in postData" v-bind:key="index">
       <BlogFeedCard v-bind="post" />
     </div>
-
   </div>
-    <ul>
-<!--      <li v-for=>-->
-<!---->
-
-<!---->
-<!--      </li>-->
-    </ul>
   </div>
 </template>
