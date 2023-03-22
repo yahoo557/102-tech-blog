@@ -6,9 +6,9 @@
 
 ## Tech Stack
 
-**Client:** Vue.js  @3.2.45
+**Client:** Vue.js  @3.2.45, typescript
 
-**Server:** Nest.js @9.2.0
+**Server:** Nest.js @9.2.0, TypeORM, typescript
  
 **DB:** PostgreSQL @14.5
 
