@@ -1,4 +1,5 @@
 import { DataSource } from 'typeorm';
+import { join } from 'path'
 
 export const databaseProviders = [{
     provide: 'DATA_SOURCE',
@@ -12,7 +13,7 @@ export const databaseProviders = [{
             database: process.env.DB_NAME,
 
             entities: [
-                __dirname + '/../**/*.entity{.ts,.js}',
+                join(__dirname + '/../**/*.entity{.ts,.js}'),
             ],
 
             synchronize: true,

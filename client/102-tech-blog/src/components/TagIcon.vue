@@ -1,8 +1,21 @@
+가<script setup lang="ts">
+interface Props {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name:string;
+  imageUrl:string;
+}
+const tag = defineProps<Props>();
+</script>
 <template>
-  <div class="card h-300  border-2 ">
-    <div class="card-body">
 
+  <a class ="d-inline-flex px-5 rounded-pill border bg-light position-relative" :href="tag.id">
+    <img v-if="tag.imageUrl" :src="tag.imageUrl" :alt="tag.name"/>
+    <p v-else> {{ tag.name }}</p>
+  </a>
 
-    </div>
-  </div>
 </template>
+<style scoped>
+
+</style>

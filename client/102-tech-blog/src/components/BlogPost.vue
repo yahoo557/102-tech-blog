@@ -12,7 +12,6 @@ interface Props {
   like_count: number;
 }
 const post = defineProps<Props>();
-console.log(post);
 const markdown = marked.parse(post.body);
 </script>
 
