@@ -1,24 +1,34 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
 import {EssentialProperty} from "../Database/essential.entity";
 import {Post} from "../Board/board.entity"
 
 @Entity()
 export class TagList extends  EssentialProperty{
-
     @Column()
     name: string;
+
+    @Column({nullable:true})
+    imageUrl: string;
 }
 
 
 @Entity()
 export class Tag extends EssentialProperty{
+
+    @Column({name:'post_id'})
+    postId: number
+    @Column({name:'tag_list_id'})
+    tagListId: number
+
     @ManyToOne((type)=>Post,{
-       createForeignKeyConstraints: false,
+        createForeignKeyConstraints: false,
     })
+    @JoinColumn({name:'post_id', referencedColumnName: 'id'})
     post: Post
 
     @ManyToOne((type)=>TagList,{
         createForeignKeyConstraints: false,
     })
-    tag:TagList
+    @JoinColumn({name:'tag_list_id', referencedColumnName: 'id'})
+    tag: TagList
 }
