@@ -1,6 +1,6 @@
 <script lang="ts">
 import { httpGet } from "@/modules/http";
-import { useStoreTag } from "@/compositions/useStoreTag";
+import { useStoreTagList } from "@/compositions/useStoreTagList";
 import TagIcon from "@/components/TagIcon.vue"
 interface Data {
   data: string;
@@ -11,7 +11,7 @@ interface Data {
 export default {
   components: { TagIcon },
   setup(): any {
-    const { tagData, setState } = useStoreTag();
+    const { tagData, setState } = useStoreTagList();
     const onSuccess = (data: Data) => {
       setState(data);
     };
@@ -19,7 +19,6 @@ export default {
       console.log('failed', data);
     };
     httpGet('/api/taglist', onSuccess, onFailed);
-    console.log(tagData);
     return {
       tagData,
     };
@@ -28,11 +27,9 @@ export default {
 </script>
 
 <template>
-
-    <div class="row row-cols-1 row-cols-sm-5 g-2 m-2 border rounded">
+    <div class="row row-cols-1 row-cols-sm-5 g-2 m-1 border rounded ">
       <div class="col" v-for="(tag, index) in tagData" v-bind:key="index">
         <TagIcon v-bind="tag" />
       </div>
     </div>
-
 </template>
