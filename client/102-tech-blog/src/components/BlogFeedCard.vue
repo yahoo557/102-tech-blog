@@ -8,6 +8,13 @@ interface Props {
   createdAt: string;
   status: string;
   date: string;
+  tags: {
+    "id": Number;
+    "createdAt": String;
+    "updatedAt": String;
+    "postId": Number;
+    "tagListId": Number;
+  }[];
 }
 
 const post = defineProps<Props>();
@@ -15,7 +22,7 @@ const post = defineProps<Props>();
 </script>
 
 <template>
-  <div class="card h-300  border-2">
+  <div class="card h-300  border-2" v-bind:class="{ tag: post.tags }">
     <div class="card-body">
       <a :href="post.id"><h4>{{ post.title }}</h4></a>
       <p class="card-text overflow-hidden">{{ post.description }}</p>
