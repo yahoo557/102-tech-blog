@@ -30,9 +30,7 @@ export default {
 </script>
 
 <template>
-  <hr />
-    <BlogPost v-bind="postData" />
-  <hr />
+  <BlogPost v-bind="postData" />
   <BlogReply />
 </template>
 <style scoped>

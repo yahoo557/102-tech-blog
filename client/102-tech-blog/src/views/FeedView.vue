@@ -20,6 +20,8 @@ export default {
       console.log('failed', data);
     };
     httpGet('/api/board', onSuccess, onFailed);
+
+    console.log(postData);
     return {
       postData,
     };

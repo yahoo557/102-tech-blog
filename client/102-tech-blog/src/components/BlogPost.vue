@@ -16,6 +16,8 @@ const markdown = marked.parse(post.body);
 </script>
 
 <template>
+  <h1>{{post.title}}</h1>
+  <hr>
   <div id="content" v-html="markdown"></div>
 </template>
 
