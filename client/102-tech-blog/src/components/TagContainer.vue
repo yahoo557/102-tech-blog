@@ -31,5 +31,6 @@ export default {
       <div class="col" v-for="(tag, index) in tagData" v-bind:key="index">
         <TagIcon v-bind="tag" />
       </div>
+        <button type="button" class="btn btn-light rounded-pill border position-relative m-1" >RESET</button>
     </div>
 </template>
