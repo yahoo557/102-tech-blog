@@ -18,11 +18,15 @@ interface Props {
 }
 
 const post = defineProps<Props>();
+let tagClass = [];
+post.tags.forEach((element)=>{
+  tagClass.push(`tag-${element.id}`)
+})
 
 </script>
 
 <template>
-  <div class="card h-300  border-2" v-bind:class="{ tag: post.tags }">
+  <div class="card h-300  border-2" :class="[tagClass]" >
     <div class="card-body">
       <a :href="post.id"><h4>{{ post.title }}</h4></a>
       <p class="card-text overflow-hidden">{{ post.description }}</p>
