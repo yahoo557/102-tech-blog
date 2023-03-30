@@ -1,4 +1,6 @@
 <script lang="ts">
+import { ref } from "vue";
+
 interface Data {
   data: string;
   rows: object[];
@@ -12,6 +14,9 @@ import TagContainer from "@/components/TagContainer.vue"
 export default {
   components: { BlogFeedCard,TagContainer },
   setup(): any {
+    let tags = ref([]);
+    let options = ref([]);
+
     const { postData, setState } = useStorePost();
     const onSuccess = (data: Data) => {
       setState(data);
@@ -21,8 +26,9 @@ export default {
     };
     httpGet('/api/board', onSuccess, onFailed);
 
-    console.log(postData);
+
     return {
+      tags,
       postData,
     };
   },
@@ -31,12 +37,12 @@ export default {
 
 <template>
   <div class="container pt-5">
-    <TagContainer />
-
-    <div class="row row-cols-1 row-cols-sm-3 g-2 m-0">
-    <div class="col" v-for="(post, index) in postData" v-bind:key="index">
-      <BlogFeedCard v-bind="post" />
-    </div>
+      <TagContainer />
+    <div class="mt-4 text-gray-800 font-bold">{{ tags }}</div>
+      <div class="row row-cols-1 row-cols-sm-3 g-2 m-0">
+      <div class="col" v-for="(post, index) in postData" v-bind:key="index">
+        <BlogFeedCard v-bind="post" />
+      </div>
   </div>
   </div>
 </template>

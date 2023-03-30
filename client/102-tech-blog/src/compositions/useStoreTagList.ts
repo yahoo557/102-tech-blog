@@ -6,8 +6,7 @@ export const useStoreTagList = (): any => {
     id: number;
     createdAt: string;
     updatedAt: string;
-    postId:number;
-    tagListId:number;
+    name:string;
   }
   const state: Ref<Tag[]> = ref([]);
   const setState = (rows: Tag[]) => {

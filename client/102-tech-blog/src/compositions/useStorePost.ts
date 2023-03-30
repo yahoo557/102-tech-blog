@@ -15,11 +15,17 @@ export const useStorePost = (): any => {
     body?: string;
     createdAt?: string;
     updatedAt?: string;
+    visible : Boolean;
     tags?:Tag[]
   }
 
+
   const state: Ref<Post[]> = ref([]);
+
   const setState = (rows: Post[]) => {
+    rows.forEach((element)=>{
+      element.visible = true;
+    })
     state.value = rows;
   };
   return {

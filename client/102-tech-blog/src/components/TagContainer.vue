@@ -10,8 +10,37 @@ interface Data {
 }
 export default {
   components: { TagIcon },
-  setup(): any {
+  emits: ["update:value"],
+  props: {
+    value: {
+      type: Array,
+      required: true,
+    },
+    options: {
+      type: Array,
+      required: true,
+      validator: (value:number[]) => {
+        const hasNameKey = value.every((option) =>
+          Object.keys(option).includes("name")
+        );
+        const hasIdKey = value.every((option) =>
+          Object.keys(option).includes("id")
+        );
+        return hasNameKey && hasIdKey;
+      },
+    },
+  },
+  setup(props:any, context:any): any {
     const { tagData, setState } = useStoreTagList();
+    const check = (optionId:number, checked:boolean) => {
+      let updatedValue = [...props.value];
+      if (checked) {
+        updatedValue.push(optionId);
+      } else {
+        updatedValue.splice(updatedValue.indexOf(optionId), 1);
+      }
+      context.emit("update:value", updatedValue);
+    };
     const onSuccess = (data: Data) => {
       setState(data);
     };
@@ -21,6 +50,7 @@ export default {
     httpGet('/api/taglist', onSuccess, onFailed);
     return {
       tagData,
+      check
     };
   },
 };
