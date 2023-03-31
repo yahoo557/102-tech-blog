@@ -12,11 +12,12 @@ interface Props {
   like_count: number;
 }
 const post = defineProps<Props>();
-console.log(post);
 const markdown = marked.parse(post.body);
 </script>
 
 <template>
+  <h1>{{post.title}}</h1>
+  <hr>
   <div id="content" v-html="markdown"></div>
 </template>
 

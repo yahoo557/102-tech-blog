@@ -3,13 +3,12 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
+  <header class = "">
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/feed">Feed</RouterLink>
+        <RouterLink class = "d-flex justify-content-center mt-3" to="/">
+          <img style="height: 10vh" src = "https://102-tech-blog.s3.ap-northeast-2.amazonaws.com/hombutton.png" alt = "hot guy wearing sunglasses"/>
+        </RouterLink>
       </nav>
-    </div>
   </header>
   <RouterView />
 </template>

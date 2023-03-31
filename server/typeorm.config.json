@@ -1,0 +1,20 @@
+{
+  "type": "postgres",
+  "host": "127.0.0.1",
+  "port": 5423,
+  "username": "seungbaek",
+  "password": "password",
+  "database": "102-tech-blog",
+  "synchronize": true,
+  "entities": [
+    "src/**/*.entity.{ts,js}"
+  ],
+  "migrations": [
+    "dist/**/*.entity.js",
+    "src/**/*.{ts,js}"
+  ],
+  "cli": {
+    "entitiesDir": "src/modules",
+    "migrationsDir": "src/migrations"
+  }
+}

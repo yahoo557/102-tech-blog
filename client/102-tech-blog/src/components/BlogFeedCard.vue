@@ -1,28 +1,40 @@
 <script setup lang="ts">
-import { Post as PostInterface } from "@/interface/postInterface";
-// interface Props extends PostInterface {};
 
 interface Props {
   id: number;
   title: string;
   body: string;
-  created_at: string;
+  description: string;
+  createdAt: string;
   status: string;
-  updated_at: string;
-  user_id: number;
-  view_count: number;
-  like_count: number;
+  date: string;
+  visible: boolean;
+  tags: {
+    "id": Number;
+    "createdAt": String;
+    "updatedAt": String;
+    "postId": Number;
+    "tagListId": Number;
+  }[];
 }
+
 const post = defineProps<Props>();
+let tagClass = [];
+post.tags.forEach((element)=>{
+  tagClass.push(`tag-${element.id}`)
+})
+
 </script>
 
 <template>
-  <div class="card h-300  border-2">
+  <div class="card h-300  border-2" :class="[tagClass]"  :style="{ display: post.visible ? 'block' : 'none' }">
     <div class="card-body">
       <a :href="post.id"><h4>{{ post.title }}</h4></a>
-      <p class="card-text overflow-hidden">{{ post.body }}</p>
+      <p class="card-text overflow-hidden">{{ post.description }}</p>
     </div>
-    <hr />
+    <div class="card-footer">
+      <p class="card-text">DATE : {{post.date}}</p>
+    </div>
   </div>
 </template>
 
