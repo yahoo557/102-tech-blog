@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import { marked } from "marked";
 interface Props {
-  id: number;
+  id: string;
   title: string;
   body: string;
-  created_at: string;
+  description: string;
+  createdAt: string;
   status: string;
-  updated_at: string;
-  user_id: number;
-  view_count: number;
-  like_count: number;
+  date: string;
+  visible: boolean;
+  tags: {
+    "id": Number;
+    "createdAt": string;
+    "updatedAt": string;
+    "postId": Number;
+    "tagListId": Number;
+  }[];
 }
 const post = defineProps<Props>();
 const markdown = marked.parse(post.body);

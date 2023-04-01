@@ -1,15 +1,17 @@
 <script lang="ts">
 import { httpGet } from "@/modules/http";
+import BlogPost from "@/components/BlogPost.vue";
+import BlogReply from "@/components/BlogReply.vue";
+import { useStorePost } from "@/compositions/useStorePost";
+import { useRoute } from "vue-router";
+
 interface Data {
   data: string;
   result: {
     rows: object[];
   };
 }
-import BlogPost from "@/components/BlogPost.vue";
-import BlogReply from "@/components/BlogReply.vue";
-import { useStorePost } from "@/compositions/useStorePost";
-import { useRoute } from "vue-router";
+
 export default {
   components: { BlogPost, BlogReply },
   setup(): any {
@@ -30,7 +32,7 @@ export default {
 </script>
 
 <template>
-  <BlogPost v-bind="postData" />
+  <BlogPost v-bind="postData"/>
   <BlogReply />
 </template>
 <style scoped>

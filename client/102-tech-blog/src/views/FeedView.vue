@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useStorePost } from "@/compositions/useStorePost";
+import { useStoreTagList} from "@/compositions/useStoreTagList";
+import { httpGet } from "@/modules/http";
+import BlogFeedCard from "@/components/BlogFeedCard.vue";
+import TagContainer from "@/components/TagContainer.vue"
 
 interface Data {
   data: string;
   rows: object[];
 }
-
-import { useStorePost } from "@/compositions/useStorePost";
-import { httpGet } from "@/modules/http";
-import BlogFeedCard from "@/components/BlogFeedCard.vue";
-import TagContainer from "@/components/TagContainer.vue"
-
-
-let tags = ref([]);
-let options = ref([]);
 
 const { postData, setState } = useStorePost();
 const onSuccess = (data: Data) => {
@@ -23,7 +19,6 @@ const onFailed = (data: Data) => {
   console.log('failed', data);
 };
 httpGet('/api/board', onSuccess, onFailed);
-
 
 </script>
 
