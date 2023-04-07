@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { defineProps, onMounted, onBeforeMount } from "vue";
 import { marked } from "marked";
 interface Props {
   id: string;
@@ -8,17 +9,18 @@ interface Props {
   createdAt: string;
   status: string;
   date: string;
-  visible: boolean;
   tags: {
-    "id": Number;
+    "id": number;
     "createdAt": string;
     "updatedAt": string;
-    "postId": Number;
-    "tagListId": Number;
+    "postId": number;
+    "tagListId": number;
   }[];
 }
 const post = defineProps<Props>();
 const markdown = marked.parse(post.body);
+
+
 </script>
 
 <template>
