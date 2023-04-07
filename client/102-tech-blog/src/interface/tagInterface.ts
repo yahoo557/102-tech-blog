@@ -1,7 +1,7 @@
 export default interface Tag{
-  "id": Number;
-  "createdAt": String;
-  "updatedAt": String;
-  "postId": Number;
-  "tagListId": Number;
+  "id": number;
+  "createdAt": string;
+  "updatedAt": string;
+  "postId": number;
+  "tagListId": number;
 }

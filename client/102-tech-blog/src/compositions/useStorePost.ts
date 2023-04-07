@@ -6,7 +6,7 @@ export const useStorePost = (): any => {
   const state: Ref<Post[]> = ref([]);
 
   const setState = (rows: Post[]) => {
-    state.value = rows;
+      state.value = rows;
   };
 
   return {
