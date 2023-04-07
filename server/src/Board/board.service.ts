@@ -12,7 +12,6 @@ export class BoardService {
     ) {}
 
     getPostById(boardId:number): Promise <Post> {
-
         return this.postRepository.findOneBy({ id:boardId})
     }
 

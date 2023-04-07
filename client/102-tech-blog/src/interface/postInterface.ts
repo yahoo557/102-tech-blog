@@ -7,4 +7,7 @@ export default interface Post {
   createdAt?: string;
   updatedAt?: string;
   tags?:Tag[]
+  visibility?:boolean;
 }
+
+

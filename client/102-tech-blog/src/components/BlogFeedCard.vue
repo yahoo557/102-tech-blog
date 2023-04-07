@@ -37,10 +37,8 @@ post.tags.forEach((element)=>{
       <p class="card-text overflow-hidden">{{ post.description }}</p>
     </div>
     <div class="card-footer">
-      <p class="card-text text-muted">Tag : </p>
-      <var  v-for="(tag, index) in post.tags" v-bind:key="index">
-<!--        {{tagData[tag.tagListId]}}-->
-      </var>
+      <p class="card-text text-muted d-inline" >Tag : </p>
+      <p class="d-inline" v-for="(tag, index) in post.tags" v-bind:key="index"> {{tag.tagListId}} </p>
       <p class="card-text text-muted">Date : {{post.date}}</p>
     </div>
 
